@@ -105,11 +105,11 @@ void Game::Update() //TODO: split into several functions
 		player.Update();
 
 		//Update Aliens and Check if they are past player
-		for (int i = 0; i < Aliens.size(); i++)
+		for (Alien& a : Aliens)
 		{
-			Aliens[i].Update();
+			a.Update();
 
-			if (Aliens[i].position.y > GetScreenHeight() - player.player_base_height)
+			if (a.position.y > GetScreenHeight() - player.player_base_height)
 			{
 				End();
 			}
@@ -133,13 +133,13 @@ void Game::Update() //TODO: split into several functions
 		offset = lineLength(playerPos, cornerPos) * -1;
 		background.Update(offset / 15);
 
-		for (int i = 0; i < Projectiles.size(); i++)
+		for (Projectile& p : Projectiles)
 		{
-			Projectiles[i].Update();
+			p.Update();
 		}
-		for (int i = 0; i < Walls.size(); i++)
+		for (Wall& w : Walls)
 		{
-			Walls[i].Update();
+			w.Update();
 		}
 
 		checkCollisions();
@@ -265,34 +265,27 @@ void Game::Render()
 
 		player.Render(resources.shipTextures[player.activeTexture]);
 
-		for (int i = 0; i < Projectiles.size(); i++)
+		for (Projectile& p : Projectiles)
 		{
-			Projectiles[i].Render(resources.laserTexture);
+			p.Render(resources.laserTexture);
 		}
 
-		for (int i = 0; i < Walls.size(); i++)
+		for (Wall& w : Walls)
 		{
-			Walls[i].Render(resources.barrierTexture);
+			w.Render(resources.barrierTexture);
 		}
 
-		for (int i = 0; i < Aliens.size(); i++)
+		for (Alien& a : Aliens)
 		{
-			Aliens[i].Render(resources.alienTexture);
+			a.Render(resources.alienTexture);
 		}
-
-
-
-
-
-
 		break;
+
 	case State::ENDSCREEN:
 
 		if (newHighScore)
 		{
 			DrawText("NEW HIGHSCORE!", 600, 300, 60, YELLOW);
-
-
 
 			// BELOW CODE IS FOR NAME INPUT RENDER
 			DrawText("PLACE MOUSE OVER INPUT BOX!", 600, 400, 20, YELLOW);
@@ -382,72 +375,60 @@ void Game::SpawnAliens()
 
 void Game::removeDeadEntities()
 {
-	for (int i = 0; i < Projectiles.size(); i++)
-	{
-		if (Projectiles[i].active == false)
-		{
-			Projectiles.erase(Projectiles.begin() + i);
-			// Prevent the loop from skipping an instance because of index changes, since all insances after
-			// the killed objects are moved down in index. This is the same for all loops with similar function
-			i--;
-		}
-	}
-	for (int i = 0; i < Aliens.size(); i++)
-	{
-		if (Aliens[i].active == false)
-		{
-			Aliens.erase(Aliens.begin() + i);
-			i--;
-		}
-	}
-	for (int i = 0; i < Walls.size(); i++)
-	{
-		if (Walls[i].active == false)
-		{
-			Walls.erase(Walls.begin() + i);
-			i--;
-		}
-	}
+	Projectiles.erase(
+		std::remove_if(Projectiles.begin(), Projectiles.end(),
+			[](const Projectile& p) { return !p.active; }),
+		Projectiles.end());
+
+	Aliens.erase(
+		std::remove_if(Aliens.begin(), Aliens.end(),
+			[](const Alien& a) { return !a.active; }),
+		Aliens.end());
+
+	Walls.erase(
+		std::remove_if(Walls.begin(), Walls.end(),
+			[](const Wall& w) { return !w.active; }),
+		Walls.end());
 }
 
 void Game::checkCollisions()
 {
-	for (int i = 0; i < Projectiles.size(); i++)
+	for (Projectile& p : Projectiles)
 	{
-		if (Projectiles[i].type == EntityType::PLAYER_PROJECTILE)
+		if (p.type == EntityType::PLAYER_PROJECTILE)
 		{
-			for (int a = 0; a < Aliens.size(); a++)
+			for (Alien& a : Aliens)
 			{
-				if (circleLineCollision(Aliens[a].position, Aliens[a].radius, Projectiles[i].lineStart, Projectiles[i].lineEnd))
+				if (circleLineCollision(a.position, a.radius, p.lineStart, p.lineEnd))
 				{
 					// Kill!
 					std::cout << "Hit! \n";
 					// Set them as inactive, will be killed later
-					Projectiles[i].active = false;
-					Aliens[a].active = false;
+					p.active = false;
+					a.active = false;
 					score += 100;
 				}
 			}
 		}
 		//ENEMY PROJECTILES HERE
-		if (Projectiles[i].type == EntityType::ENEMY_PROJECTILE)
+		if (p.type == EntityType::ENEMY_PROJECTILE)
 		{
-			if (circleLineCollision({ player.x_pos, GetScreenHeight() - player.player_base_height }, player.radius, Projectiles[i].lineStart, Projectiles[i].lineEnd))
+			if (circleLineCollision({ player.x_pos, GetScreenHeight() - player.player_base_height }, player.radius, p.lineStart, p.lineEnd))
 			{
 				std::cout << "dead!\n";
-				Projectiles[i].active = false;
+				p.active = false;
 				player.lives -= 1;
 			}
 		}
-		for (int b = 0; b < Walls.size(); b++)
+		for (Wall& w : Walls)
 		{
-			if (circleLineCollision(Walls[b].position, Walls[b].radius, Projectiles[i].lineStart, Projectiles[i].lineEnd))
+			if (circleLineCollision(w.position, w.radius, p.lineStart, p.lineEnd))
 			{
 				// Kill!
 				std::cout << "Hit! \n";
 				// Set them as inactive, will be killed later
-				Projectiles[i].active = false;
-				Walls[b].health -= 1;
+				p.active = false;
+				w.health -= 1;
 			}
 		}
 	}

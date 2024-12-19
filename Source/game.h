@@ -9,6 +9,7 @@
 #include "star.h"
 #include "entitytype.h"
 #include "wall.h"
+#include <algorithm>
 
 enum struct State
 {
