@@ -2,16 +2,13 @@
 
 void Player::Initialize()
 {
-
 	float window_width = (float)GetScreenWidth();
 	x_pos = window_width / 2;
 	std::cout << "Find Player -X:" << GetScreenWidth() / 2 << "Find Player -Y" << GetScreenHeight() - player_base_height << std::endl;
-
 }
 
 void Player::Update()
 {
-
 	//Movement
 	direction = 0;
 	if (IsKeyDown(KEY_LEFT))
@@ -34,7 +31,6 @@ void Player::Update()
 		x_pos = GetScreenWidth() - radius;
 	}
 
-
 	//Determine frame for animation
 	timer += GetFrameTime();
 
@@ -48,8 +44,6 @@ void Player::Update()
 		activeTexture++;
 		timer = 0;
 	}
-
-
 }
 
 void Player::Render(Texture2D texture)
