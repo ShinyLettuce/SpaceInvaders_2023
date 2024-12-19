@@ -214,32 +214,7 @@ void Game::Update() //TODO: split into several functions
 		}
 
 		// REMOVE INACTIVE/DEAD ENITITIES
-		for (int i = 0; i < Projectiles.size(); i++)
-		{
-			if (Projectiles[i].active == false)
-			{
-				Projectiles.erase(Projectiles.begin() + i);
-				// Prevent the loop from skipping an instance because of index changes, since all insances after
-				// the killed objects are moved down in index. This is the same for all loops with similar function
-				i--;
-			}
-		}
-		for (int i = 0; i < Aliens.size(); i++)
-		{
-			if (Aliens[i].active == false)
-			{
-				Aliens.erase(Aliens.begin() + i);
-				i--;
-			}
-		}
-		for (int i = 0; i < Walls.size(); i++)
-		{
-			if (Walls[i].active == false)
-			{
-				Walls.erase(Walls.begin() + i);
-				i--;
-			}
-		}
+		removeDeadEntities();
 	break;
 
 	case State::ENDSCREEN:
@@ -448,6 +423,36 @@ void Game::SpawnAliens()
 		}
 	}
 
+}
+
+void Game::removeDeadEntities()
+{
+	for (int i = 0; i < Projectiles.size(); i++)
+	{
+		if (Projectiles[i].active == false)
+		{
+			Projectiles.erase(Projectiles.begin() + i);
+			// Prevent the loop from skipping an instance because of index changes, since all insances after
+			// the killed objects are moved down in index. This is the same for all loops with similar function
+			i--;
+		}
+	}
+	for (int i = 0; i < Aliens.size(); i++)
+	{
+		if (Aliens[i].active == false)
+		{
+			Aliens.erase(Aliens.begin() + i);
+			i--;
+		}
+	}
+	for (int i = 0; i < Walls.size(); i++)
+	{
+		if (Walls[i].active == false)
+		{
+			Walls.erase(Walls.begin() + i);
+			i--;
+		}
+	}
 }
 
 void Game::createPlayerProjectile()

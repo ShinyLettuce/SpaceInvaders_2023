@@ -58,6 +58,7 @@ struct Game
 	void SaveLeaderboard();
 
 	void createPlayerProjectile();
+	void removeDeadEntities();
 
 	// Entity Storage and Resources
 	Resources resources;
