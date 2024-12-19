@@ -84,7 +84,7 @@ void Game::Launch()
 	resources.Load();
 }
 
-void Game::Update()
+void Game::Update() //TODO: split into several functions
 {
 	switch (gameState)
 	{
