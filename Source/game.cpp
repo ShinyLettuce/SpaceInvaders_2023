@@ -78,11 +78,6 @@ void Game::Continue()
 	gameState = State::STARTSCREEN;
 }
 
-void Game::Launch()
-{
-	resources.Load();
-}
-
 void Game::Update() //TODO: split into several functions
 {
 	switch (gameState)
