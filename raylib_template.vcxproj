@@ -164,15 +164,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="level.cpp" />
+    <ClCompile Include="Source\alien.cpp" />
     <ClCompile Include="Source\game.cpp" />
+    <ClCompile Include="Source\level.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\player.cpp" />
+    <ClCompile Include="Source\projectile.cpp" />
     <ClCompile Include="Source\Resources.cpp" />
+    <ClCompile Include="Source\star.cpp" />
+    <ClCompile Include="Source\wall.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="level.h" />
+    <ClInclude Include="Source\alien.h" />
+    <ClInclude Include="Source\entitytype.h" />
     <ClInclude Include="Source\game.h" />
+    <ClInclude Include="Source\level.h" />
+    <ClInclude Include="Source\player.h" />
+    <ClInclude Include="Source\projectile.h" />
     <ClInclude Include="Source\Resources.h" />
+    <ClInclude Include="Source\star.h" />
+    <ClInclude Include="Source\wall.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

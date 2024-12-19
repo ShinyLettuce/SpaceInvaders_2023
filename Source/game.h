@@ -3,7 +3,14 @@
 #include <vector>
 #include "Resources.h"
 #include <string>
+#include "alien.h"
+#include "player.h"
+#include "projectile.h"
+#include "star.h"
+#include "entitytype.h"
+#include "wall.h"
 
+ // TODO: Move into separate files
 
 enum struct State
 {
@@ -12,116 +19,10 @@ enum struct State
 	ENDSCREEN
 };
 
-enum struct EntityType
-{
-	PLAYER,
-	ENEMY,
-	PLAYER_PROJECTILE,
-	ENEMY_PROJECTILE
-};
-
 struct PlayerData
 {
 	std::string name;
 	int score;
-};
-
-struct Player
-{
-public:
-
-	float x_pos = 0;
-	float speed = 7;
-	float player_base_height = 70.0f;  
-	float radius = 50;
-	int lives = 3;
-	int direction = 0;
-	int activeTexture = 0;
-	float timer = 0;
-
-	EntityType type = EntityType::PLAYER;
-
-	void Initialize();
-	void Render(Texture2D texture);
-	void Update();
-	
-};
-
-
-struct Projectile
-{
-public: 
-	// INITIALIZE PROJECTILE WHILE DEFINING IF ITS PLAYER OR ENEMY 
-	Vector2 position = {0,0};
-	int speed = 15; 
-	bool active = true;  
-	EntityType type = {};
-
-	// LINE WILL UPDATE WITH POSITION FOR CALCULATIONS
-	Vector2 lineStart = { 0, 0 };
-	Vector2 lineEnd = { 0, 0 };
-
-	void Update();
-
-	void Render(Texture2D texture);
-};
-
-struct Wall 
-{
-public: 
-	Vector2 position; 
-	Rectangle rec; 
-	bool active; 
-	Color color; 
-	int health = 50;
-	int radius = 60;
-
-
-	void Render(Texture2D texture); 
-	void Update(); 
-};
-
-struct Alien
-{
-public:
-	
-	Color color = WHITE; 
-	Vector2 position = {0, 0};
-	int x = 0; 
-	int y = 0; 
-	float radius = 30;
-	bool active = true;  
-	bool moveRight = true; 
-	
-	EntityType type = EntityType::ENEMY; 
-
-	int speed = 2; 
-		 
-	void Update(); 
-	void Render(Texture2D texture); 
-};
-
-
-struct Star
-{
-	Vector2 initPosition = { 0, 0 };
-	Vector2 position = { 0, 0 };
-	Color color = GRAY;
-	float size = 0;
-	void Update(float starOffset);
-	void Render();
-};
-
-struct Background
-{
-	
-
-	std::vector<Star> Stars;
-
-	void Initialize(int starAmount);
-	void Update(float offset);
-	void Render();
-
 };
 
 struct Game
