@@ -80,7 +80,6 @@ void Game::Continue()
 
 void Game::Launch()
 {
-	//LOAD SOME RESOURCES HERE
 	resources.Load();
 }
 
@@ -143,10 +142,8 @@ void Game::Update() //TODO: split into several functions
 			Walls[i].Update();
 		}
 
-		//CHECK ALL COLLISONS HERE
 		checkCollisions();
 
-		//MAKE PROJECTILE
 		if (IsKeyPressed(KEY_SPACE))
 		{
 			createPlayerProjectile();
@@ -172,7 +169,6 @@ void Game::Update() //TODO: split into several functions
 			shootTimer = 0;
 		}
 
-		// REMOVE INACTIVE/DEAD ENITITIES
 		removeDeadEntities();
 		break;
 
