@@ -57,6 +57,8 @@ struct Game
 	void LoadLeaderboard();
 	void SaveLeaderboard();
 
+	void createPlayerProjectile();
+
 	// Entity Storage and Resources
 	Resources resources;
 	Player player;

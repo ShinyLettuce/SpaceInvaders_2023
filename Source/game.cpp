@@ -89,23 +89,20 @@ void Game::Update() //TODO: split into several functions
 	switch (gameState)
 	{
 	case State::STARTSCREEN:
-		//Code 
+
 		if (IsKeyReleased(KEY_SPACE))
 		{
 			Start();
-
-
 		}
-
 		break;
+
 	case State::GAMEPLAY:
-		//Code
+
 		if (IsKeyReleased(KEY_Q))
 		{
 			End();
 		}
 
-		//Update Player
 		player.Update();
 		
 		//Update Aliens and Check if they are past player
@@ -131,20 +128,16 @@ void Game::Update() //TODO: split into several functions
 			SpawnAliens();
 		}
 
-
 		// Update background with offset
 		playerPos = { player.x_pos, (float)player.player_base_height };
 		cornerPos = { 0, (float)player.player_base_height };
 		offset = lineLength(playerPos, cornerPos) * -1;
 		background.Update(offset / 15);
 
-
-		//UPDATE PROJECTILE
 		for (int i = 0; i < Projectiles.size(); i++)
 		{
 			Projectiles[i].Update();
 		}
-		//UPDATE PROJECTILE
 		for (int i = 0; i < Walls.size(); i++)
 		{
 			Walls[i].Update();
@@ -168,7 +161,6 @@ void Game::Update() //TODO: split into several functions
 					}
 				}
 			}
-
 			//ENEMY PROJECTILES HERE
 			for (int i = 0; i < Projectiles.size(); i++)
 			{
@@ -182,8 +174,6 @@ void Game::Update() //TODO: split into several functions
 					}
 				}
 			}
-
-
 			for (int b = 0; b < Walls.size(); b++)
 			{
 				if (CheckCollision(Walls[b].position, Walls[b].radius, Projectiles[i].lineStart, Projectiles[i].lineEnd))
@@ -200,12 +190,7 @@ void Game::Update() //TODO: split into several functions
 		//MAKE PROJECTILE
 		if (IsKeyPressed(KEY_SPACE))
 		{
-			float window_height = (float)GetScreenHeight();
-			Projectile newProjectile;
-			newProjectile.position.x = player.x_pos;
-			newProjectile.position.y = window_height - 130;
-			newProjectile.type = EntityType::PLAYER_PROJECTILE;
-			Projectiles.push_back(newProjectile);
+			createPlayerProjectile();
 		}
 
 		//Aliens Shooting
@@ -463,6 +448,16 @@ void Game::SpawnAliens()
 		}
 	}
 
+}
+
+void Game::createPlayerProjectile()
+{
+	float window_height = (float)GetScreenHeight();
+	Projectile newProjectile;
+	newProjectile.position.x = player.x_pos;
+	newProjectile.position.y = window_height - 130;
+	newProjectile.type = EntityType::PLAYER_PROJECTILE;
+	Projectiles.push_back(newProjectile);
 }
 
 bool Game::CheckNewHighScore()
