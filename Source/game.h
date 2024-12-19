@@ -10,8 +10,6 @@
 #include "entitytype.h"
 #include "wall.h"
 
- // TODO: Move into separate files
-
 enum struct State
 {
 	STARTSCREEN,
@@ -27,10 +25,8 @@ struct PlayerData
 
 struct Game
 {
-	// Gamestate
 	State gameState = {};
 
-	// Score
 	int score;
 
 	// for later, make a file where you can adjust the number of walls (config file) 

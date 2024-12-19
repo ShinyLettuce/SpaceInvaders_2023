@@ -7,14 +7,14 @@
 
 
 // MATH FUNCTIONS
-float lineLength(Vector2 A, Vector2 B) //Uses pythagoras to calculate the length of a line
+float lineLength(Vector2 A, Vector2 B)
 {
 	float length = sqrtf(pow(B.x - A.x, 2) + pow(B.y - A.y, 2));
 
 	return length;
 }
 
-bool pointInCircle(Vector2 circlePos, float radius, Vector2 point) // Uses pythagoras to calculate if a point is within a circle or not
+bool pointInCircle(Vector2 circlePos, float radius, Vector2 point)
 {
 	float distanceToCentre = lineLength(circlePos, point);
 
@@ -45,17 +45,12 @@ void Game::Start()
 
 	}
 
-
-	//creating player
 	Player newPlayer;
 	player = newPlayer;
 	player.Initialize();
 
-	//creating aliens
 	SpawnAliens();
 	
-
-	//creating background
 	Background newBackground;
 	newBackground.Initialize(600);
 	background = newBackground;
@@ -260,21 +255,15 @@ void Game::Update()
 				i--;
 			}
 		}
-
-			
-		
-
 	break;
+
 	case State::ENDSCREEN:
-		//Code
 	
 		//Exit endscreen
 		if (IsKeyReleased(KEY_ENTER) && !newHighScore)
 		{
 			Continue();
 		}
-
-	
 
 		if (newHighScore)
 		{
@@ -332,13 +321,9 @@ void Game::Update()
 
 				newHighScore = false;
 			}
-
-
 		}
-		
-
-
 		break;
+
 	default:
 		//SHOULD NOT HAPPEN
 		break;
@@ -351,40 +336,30 @@ void Game::Render()
 	switch (gameState)
 	{
 	case State::STARTSCREEN:
-		//Code
+
 		DrawText("SPACE INVADERS", 200, 100, 160, YELLOW);
-
 		DrawText("PRESS SPACE TO BEGIN", 200, 350, 40, YELLOW);
-
-
 		break;
+
 	case State::GAMEPLAY:
-		//Code
-
-
-		//background render LEAVE THIS AT TOP
+		//LEAVE THIS AT TOP
 		background.Render();
 
-		//DrawText("GAMEPLAY", 50, 30, 40, YELLOW);
 		DrawText(TextFormat("Score: %i", score), 50, 20, 40, YELLOW);
 		DrawText(TextFormat("Lives: %i", player.lives), 50, 70, 40, YELLOW);
 
-		//player rendering 
 		player.Render(resources.shipTextures[player.activeTexture]);
 
-		//projectile rendering
 		for (int i = 0; i < Projectiles.size(); i++)
 		{
 			Projectiles[i].Render(resources.laserTexture);
 		}
 
-		// wall rendering 
 		for (int i = 0; i < Walls.size(); i++)
 		{
 			Walls[i].Render(resources.barrierTexture); 
 		}
 
-		//alien rendering  
 		for (int i = 0; i < Aliens.size(); i++)
 		{
 			Aliens[i].Render(resources.alienTexture);
@@ -397,14 +372,6 @@ void Game::Render()
 
 		break;
 	case State::ENDSCREEN:
-		//Code
-		//DrawText("END", 50, 50, 40, YELLOW);
-
-
-		
-
-		
-
 
 		if (newHighScore)
 		{
@@ -632,46 +599,4 @@ bool Game::CheckCollision(Vector2 circlePos, float circleRadius, Vector2 lineSta
 	}
 
 }
-
-/*LEGACY CODE
-	// our objective is to calculate the distance between the closest point of the line to the centre of the circle,
-	// and determine if it is shorter than the radius.
-
-	// we can imagine the edges of the line and circle centre to form a triangle. calculating the height of the
-	// triangle will give us the distance, if the line serves as the base
-
-	// simplify variables
-	Vector2 A = lineStart;
-	Vector2 B = lineEnd;
-	Vector2 C = circlePos;
-
-	// calculate area using determinant method
-
-	float triangle_area = fabsf(A.x * (B.y - C.y) + B.x * (C.y - A.y) + C.x * (A.y - B.y)) / 2;
-
-
-	// Caculate vectors AB to calculate base length
-	Vector2 AB;
-	AB.x = B.x - A.x;
-	AB.y = B.y - A.y;
-
-	//get the base length
-	float trangle_base_length = (float)sqrt(pow(AB.x, 2) + pow(AB.y, 2));
-
-	// we double the area to turn in into a rectangle, and then divide the base length to get the height.
-	float triangle_height = (triangle_area * 2 ) / trangle_base_length;
-
-	std::cout << triangle_area << "\n";
-
-	if (triangle_height < circleRadius)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-
-
-	*/
 
