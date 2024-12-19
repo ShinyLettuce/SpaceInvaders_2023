@@ -51,7 +51,7 @@ struct Game
 	void Update();
 	void Render();
 	void SpawnAliens();
-	bool CheckCollision(Vector2 circlePos, float circleRadius, Vector2 lineTop, Vector2 lineBottom);
+	bool circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 lineTop, Vector2 lineBottom);
 	bool CheckNewHighScore();
 	void InsertNewHighScore(std::string name);
 	void LoadLeaderboard();
@@ -59,6 +59,7 @@ struct Game
 
 	void createPlayerProjectile();
 	void removeDeadEntities();
+	void checkCollisions();
 
 	// Entity Storage and Resources
 	Resources resources;

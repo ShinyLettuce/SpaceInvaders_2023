@@ -32,16 +32,16 @@ bool pointInCircle(Vector2 circlePos, float radius, Vector2 point)
 void Game::Start()
 {
 	// creating walls 
-	float window_width = (float)GetScreenWidth(); 
-	float window_height = (float)GetScreenHeight(); 
-	float wall_distance = window_width / (wallCount + 1); 
+	float window_width = (float)GetScreenWidth();
+	float window_height = (float)GetScreenHeight();
+	float wall_distance = window_width / (wallCount + 1);
 	for (int i = 0; i < wallCount; i++)
 	{
 		Wall newWalls;
-		newWalls.position.y = window_height - 250; 
-		newWalls.position.x = wall_distance * (i + 1); 
+		newWalls.position.y = window_height - 250;
+		newWalls.position.x = wall_distance * (i + 1);
 
-		Walls.push_back(newWalls); 
+		Walls.push_back(newWalls);
 
 	}
 
@@ -50,7 +50,7 @@ void Game::Start()
 	player.Initialize();
 
 	SpawnAliens();
-	
+
 	Background newBackground;
 	newBackground.Initialize(600);
 	background = newBackground;
@@ -104,11 +104,11 @@ void Game::Update() //TODO: split into several functions
 		}
 
 		player.Update();
-		
+
 		//Update Aliens and Check if they are past player
 		for (int i = 0; i < Aliens.size(); i++)
 		{
-			Aliens[i].Update(); 
+			Aliens[i].Update();
 
 			if (Aliens[i].position.y > GetScreenHeight() - player.player_base_height)
 			{
@@ -144,48 +144,7 @@ void Game::Update() //TODO: split into several functions
 		}
 
 		//CHECK ALL COLLISONS HERE
-		for (int i = 0; i < Projectiles.size(); i++)
-		{
-			if (Projectiles[i].type == EntityType::PLAYER_PROJECTILE)
-			{
-				for (int a = 0; a < Aliens.size(); a++)
-				{
-					if (CheckCollision(Aliens[a].position, Aliens[a].radius, Projectiles[i].lineStart, Projectiles[i].lineEnd))
-					{
-						// Kill!
-						std::cout << "Hit! \n";
-						// Set them as inactive, will be killed later
-						Projectiles[i].active = false;
-						Aliens[a].active = false;
-						score += 100;
-					}
-				}
-			}
-			//ENEMY PROJECTILES HERE
-			for (int i = 0; i < Projectiles.size(); i++)
-			{
-				if (Projectiles[i].type == EntityType::ENEMY_PROJECTILE)
-				{
-					if (CheckCollision({player.x_pos, GetScreenHeight() - player.player_base_height }, player.radius, Projectiles[i].lineStart, Projectiles[i].lineEnd))
-					{
-						std::cout << "dead!\n"; 
-						Projectiles[i].active = false; 
-						player.lives -= 1; 
-					}
-				}
-			}
-			for (int b = 0; b < Walls.size(); b++)
-			{
-				if (CheckCollision(Walls[b].position, Walls[b].radius, Projectiles[i].lineStart, Projectiles[i].lineEnd))
-				{
-					// Kill!
-					std::cout << "Hit! \n";
-					// Set them as inactive, will be killed later
-					Projectiles[i].active = false;
-					Walls[b].health -= 1;
-				}
-			}
-		}
+		checkCollisions();
 
 		//MAKE PROJECTILE
 		if (IsKeyPressed(KEY_SPACE))
@@ -215,10 +174,10 @@ void Game::Update() //TODO: split into several functions
 
 		// REMOVE INACTIVE/DEAD ENITITIES
 		removeDeadEntities();
-	break;
+		break;
 
 	case State::ENDSCREEN:
-	
+
 		//Exit endscreen
 		if (IsKeyReleased(KEY_ENTER) && !newHighScore)
 		{
@@ -317,7 +276,7 @@ void Game::Render()
 
 		for (int i = 0; i < Walls.size(); i++)
 		{
-			Walls[i].Render(resources.barrierTexture); 
+			Walls[i].Render(resources.barrierTexture);
 		}
 
 		for (int i = 0; i < Aliens.size(); i++)
@@ -375,7 +334,7 @@ void Game::Render()
 					//Name needs to be shorter
 					DrawText("Press BACKSPACE to delete chars...", 600, 650, 20, YELLOW);
 				}
-				
+
 			}
 
 			// Explain how to continue when name is input
@@ -399,7 +358,7 @@ void Game::Render()
 			}
 		}
 
-		
+
 
 
 		break;
@@ -451,6 +410,49 @@ void Game::removeDeadEntities()
 		{
 			Walls.erase(Walls.begin() + i);
 			i--;
+		}
+	}
+}
+
+void Game::checkCollisions()
+{
+	for (int i = 0; i < Projectiles.size(); i++)
+	{
+		if (Projectiles[i].type == EntityType::PLAYER_PROJECTILE)
+		{
+			for (int a = 0; a < Aliens.size(); a++)
+			{
+				if (circleLineCollision(Aliens[a].position, Aliens[a].radius, Projectiles[i].lineStart, Projectiles[i].lineEnd))
+				{
+					// Kill!
+					std::cout << "Hit! \n";
+					// Set them as inactive, will be killed later
+					Projectiles[i].active = false;
+					Aliens[a].active = false;
+					score += 100;
+				}
+			}
+		}
+		//ENEMY PROJECTILES HERE
+		if (Projectiles[i].type == EntityType::ENEMY_PROJECTILE)
+		{
+			if (circleLineCollision({ player.x_pos, GetScreenHeight() - player.player_base_height }, player.radius, Projectiles[i].lineStart, Projectiles[i].lineEnd))
+			{
+				std::cout << "dead!\n";
+				Projectiles[i].active = false;
+				player.lives -= 1;
+			}
+		}
+		for (int b = 0; b < Walls.size(); b++)
+		{
+			if (circleLineCollision(Walls[b].position, Walls[b].radius, Projectiles[i].lineStart, Projectiles[i].lineEnd))
+			{
+				// Kill!
+				std::cout << "Hit! \n";
+				// Set them as inactive, will be killed later
+				Projectiles[i].active = false;
+				Walls[b].health -= 1;
+			}
 		}
 	}
 }
@@ -535,7 +537,7 @@ void Game::SaveLeaderboard()
 }
 
 
-bool Game::CheckCollision(Vector2 circlePos, float circleRadius, Vector2 lineStart, Vector2 lineEnd)
+bool Game::circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 lineStart, Vector2 lineEnd)
 {
 	// our objective is to calculate the distance between the closest point on the line to the centre of the circle, 
 	// and determine if it is shorter than the radius.
@@ -553,7 +555,7 @@ bool Game::CheckCollision(Vector2 circlePos, float circleRadius, Vector2 lineSta
 
 	// calculate the length of the line
 	float length = lineLength(A, B);
-	
+
 	// calculate the dot product
 	float dotP = (((C.x - A.x) * (B.x - A.x)) + ((C.y - A.y) * (B.y - A.y))) / pow(length, 2);
 
