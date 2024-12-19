@@ -181,7 +181,7 @@
     <ClInclude Include="Source\level.h" />
     <ClInclude Include="Source\player.h" />
     <ClInclude Include="Source\projectile.h" />
-    <ClInclude Include="Source\Resources.h" />
+    <ClInclude Include="Source\mytexture2d.h" />
     <ClInclude Include="Source\star.h" />
     <ClInclude Include="Source\wall.h" />
   </ItemGroup>

@@ -1,6 +1,6 @@
 #pragma once
 #include "raylib.h"
-#include "Resources.h"
+#include "mytexture2d.h"
 
 struct Wall
 {

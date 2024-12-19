@@ -2,7 +2,7 @@
 #include "raylib.h"
 #include <vector>
 #include <array>
-#include "Resources.h"
+#include "mytexture2d.h"
 #include <string>
 #include "alien.h"
 #include "player.h"

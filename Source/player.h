@@ -2,7 +2,7 @@
 #include "raylib.h"
 #include "entitytype.h"
 #include <iostream>
-#include "Resources.h"
+#include "mytexture2d.h"
 
 struct Player
 {
