@@ -17,10 +17,10 @@ void Projectile::Update()
 	}
 }
 
-void Projectile::Render(Texture2D texture)
+void Projectile::Render(const MyTexture2D& texture)
 {
 	//DrawCircle((int)position.x, (int)position.y, 10, RED);
-	DrawTexturePro(texture,
+	DrawTexturePro(texture.get(),
 		{
 			0,
 			0,

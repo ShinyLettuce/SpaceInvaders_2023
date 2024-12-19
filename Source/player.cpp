@@ -46,11 +46,11 @@ void Player::Update()
 	}
 }
 
-void Player::Render(Texture2D texture)
+void Player::Render(const MyTexture2D& texture)
 {
 	float window_height = GetScreenHeight();
 
-	DrawTexturePro(texture,
+	DrawTexturePro(texture.get(),
 		{
 			0,
 			0,

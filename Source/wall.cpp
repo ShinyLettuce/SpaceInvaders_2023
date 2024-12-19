@@ -1,8 +1,8 @@
 #include "wall.h"
 
-void Wall::Render(Texture2D texture)
+void Wall::Render(const MyTexture2D& texture)
 {
-	DrawTexturePro(texture,
+	DrawTexturePro(texture.get(),
 		{
 			0,
 			0,

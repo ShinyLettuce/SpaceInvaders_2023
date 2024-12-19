@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include "entitytype.h"
 #include <iostream>
+#include "Resources.h"
 
 struct Player
 {
@@ -19,7 +20,7 @@ public:
 	EntityType type = EntityType::PLAYER;
 
 	void Initialize();
-	void Render(Texture2D texture);
+	void Render(const MyTexture2D& texture);
 	void Update();
 
 };

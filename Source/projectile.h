@@ -1,6 +1,7 @@
 #pragma once
 #include "raylib.h"
 #include "entitytype.h"
+#include "Resources.h"
 
 struct Projectile
 {
@@ -17,5 +18,5 @@ public:
 
 	void Update();
 
-	void Render(Texture2D texture);
+	void Render(const MyTexture2D& texture);
 };

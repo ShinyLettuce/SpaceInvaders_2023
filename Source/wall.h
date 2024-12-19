@@ -1,5 +1,6 @@
 #pragma once
 #include "raylib.h"
+#include "Resources.h"
 
 struct Wall
 {
@@ -12,6 +13,6 @@ public:
 	int radius = 60;
 
 
-	void Render(Texture2D texture);
+	void Render(const MyTexture2D& texture);
 	void Update();
 };

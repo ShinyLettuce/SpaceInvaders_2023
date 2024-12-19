@@ -1,6 +1,7 @@
 #pragma once
 #include "raylib.h"
 #include <vector>
+#include <array>
 #include "Resources.h"
 #include <string>
 #include "alien.h"
@@ -46,7 +47,6 @@ struct Game
 	bool newHighScore = false;
 	
 	Game() {
-		resources.Load();
 		gameState = State::STARTSCREEN;
 	}
 
@@ -67,7 +67,11 @@ struct Game
 	void checkCollisions();
 
 	// Entity Storage and Resources
-	Resources resources;
+	std::array<MyTexture2D, 3> shipTextures{ MyTexture2D{"./Assets/Ship1.png"}, MyTexture2D{"./Assets/Ship2.png"}, MyTexture2D{"./Assets/Ship3.png"} };
+
+	MyTexture2D alienTexture{ "./Assets/Alien.png" };
+	MyTexture2D barrierTexture{ "./Assets/Barrier.png" };
+	MyTexture2D laserTexture{ "./Assets/Laser.png" };
 	Player player;
 	std::vector<Projectile> Projectiles;
 	std::vector<Wall> Walls;

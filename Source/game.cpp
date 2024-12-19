@@ -258,21 +258,21 @@ void Game::Render()
 		DrawText(TextFormat("Score: %i", score), 50, 20, 40, YELLOW);
 		DrawText(TextFormat("Lives: %i", player.lives), 50, 70, 40, YELLOW);
 
-		player.Render(resources.shipTextures[player.activeTexture]);
+		player.Render(shipTextures[player.activeTexture]);
 
 		for (Projectile& p : Projectiles)
 		{
-			p.Render(resources.laserTexture);
+			p.Render(laserTexture);
 		}
 
 		for (Wall& w : Walls)
 		{
-			w.Render(resources.barrierTexture);
+			w.Render(barrierTexture);
 		}
 
 		for (Alien& a : Aliens)
 		{
-			a.Render(resources.alienTexture);
+			a.Render(alienTexture);
 		}
 		break;
 
