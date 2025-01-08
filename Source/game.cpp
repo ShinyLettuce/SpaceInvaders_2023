@@ -47,14 +47,11 @@ void Game::Start()
 	Background newBackground;
 	newBackground.Initialize(600);
 	background = newBackground;
-
-	//reset score
 	score = 0;
 }
 
 void Game::End()
 {
-	//SAVE SCORE AND UPDATE SCOREBOARD
 	Projectiles.clear();
 	Walls.clear();
 	Aliens.clear();
@@ -70,7 +67,6 @@ void Game::Update() //TODO: split into several functions
 
 	player.Update();
 
-	//Update Aliens and Check if they are past player
 	for (Alien& a : Aliens)
 	{
 		a.Update();
@@ -81,13 +77,11 @@ void Game::Update() //TODO: split into several functions
 		}
 	}
 
-	//End game if player dies
 	if (player.lives < 1)
 	{
 		End();
 	}
 
-	//Spawn new aliens if aliens run out
 	if (Aliens.empty())
 	{
 		SpawnAliens();
@@ -115,9 +109,8 @@ void Game::Update() //TODO: split into several functions
 		createPlayerProjectile();
 	}
 
-	//Aliens Shooting
 	shootTimer += 1;
-	if (shootTimer > 59) //once per second
+	if (shootTimer > 59)
 	{
 		int randomAlienIndex = 0;
 
@@ -140,7 +133,6 @@ void Game::Update() //TODO: split into several functions
 
 void Game::Render()
 {
-		//LEAVE THIS AT TOP
 		background.Render();
 
 		DrawText(TextFormat("Score: %i", score), 50, 20, 40, YELLOW);
@@ -207,21 +199,16 @@ void Game::checkCollisions()
 			{
 				if (circleLineCollision(a.position, a.radius, p.lineStart, p.lineEnd))
 				{
-					// Kill!
-					std::cout << "Hit! \n";
-					// Set them as inactive, will be killed later
 					p.active = false;
 					a.active = false;
 					score += 100;
 				}
 			}
 		}
-		//ENEMY PROJECTILES HERE
 		if (p.type == EntityType::ENEMY_PROJECTILE)
 		{
 			if (circleLineCollision({ player.x_pos, GetScreenHeight() - player.player_base_height }, player.radius, p.lineStart, p.lineEnd))
 			{
-				std::cout << "dead!\n";
 				p.active = false;
 				player.lives -= 1;
 			}
@@ -230,9 +217,6 @@ void Game::checkCollisions()
 		{
 			if (circleLineCollision(w.position, w.radius, p.lineStart, p.lineEnd))
 			{
-				// Kill!
-				std::cout << "Hit! \n";
-				// Set them as inactive, will be killed later
 				p.active = false;
 				w.health -= 1;
 			}
@@ -252,64 +236,44 @@ void Game::createPlayerProjectile()
 
 bool Game::circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 lineStart, Vector2 lineEnd)
 {
-	// our objective is to calculate the distance between the closest point on the line to the centre of the circle, 
-	// and determine if it is shorter than the radius.
-
-	// check if either edge of line is within circle
 	if (pointInCircle(circlePos, circleRadius, lineStart) || pointInCircle(circlePos, circleRadius, lineEnd))
 	{
 		return true;
 	}
 
-	// simplify variables
 	Vector2 A = lineStart;
 	Vector2 B = lineEnd;
 	Vector2 C = circlePos;
 
-	// calculate the length of the line
 	float length = lineLength(A, B);
 
-	// calculate the dot product
 	float dotP = (((C.x - A.x) * (B.x - A.x)) + ((C.y - A.y) * (B.y - A.y))) / pow(length, 2);
 
-	// use dot product to find closest point
 	float closestX = A.x + (dotP * (B.x - A.x));
 	float closestY = A.y + (dotP * (B.y - A.y));
 
-	//find out if coordinates are on the line.
-	// we do this by comparing the distance of the dot to the edges, with two vectors
-	// if the distance of the vectors combined is the same as the length the point is on the line
-
-	//since we are using floating points, we will allow the distance to be slightly innaccurate to create a smoother collision
 	float buffer = 0.1;
 
-	float closeToStart = lineLength(A, { closestX, closestY }); //closestX + Y compared to line Start
-	float closeToEnd = lineLength(B, { closestX, closestY });	//closestX + Y compared to line End
+	float closeToStart = lineLength(A, { closestX, closestY });
+	float closeToEnd = lineLength(B, { closestX, closestY });
 
 	float closestLength = closeToStart + closeToEnd;
 
 	if (closestLength == length + buffer || closestLength == length - buffer)
 	{
-		//Point is on the line!
-
-		//Compare length between closest point and circle centre with circle radius
-
-		float closeToCentre = lineLength(A, { closestX, closestY }); //closestX + Y compared to circle centre
+		float closeToCentre = lineLength(A, { closestX, closestY });
 
 		if (closeToCentre < circleRadius)
 		{
-			//Line is colliding with circle!
 			return true;
 		}
 		else
 		{
-			//Line is not colliding
 			return false;
 		}
 	}
 	else
 	{
-		// Point is not on the line, line is not colliding
 		return false;
 	}
 }
