@@ -1,17 +1,15 @@
 #include "star.h"
 
-void Star::Update(float starOffset)
+void Star::Update(float starOffset) noexcept
 {
 	position.x = initPosition.x + starOffset;
 	position.y = initPosition.y;
-
 }
 
-void Star::Render()
+void Star::Render() const noexcept
 {
-	DrawCircle((int)position.x, (int)position.y, size, color);
+	DrawCircle(static_cast<int>(position.x), static_cast<int>(position.y), size, color);
 }
-
 
 void Background::Initialize(int starAmount)
 {
@@ -28,7 +26,6 @@ void Background::Update(float offset)
 	{
 		star.Update(offset);
 	}
-
 }
 
 void Background::Render()

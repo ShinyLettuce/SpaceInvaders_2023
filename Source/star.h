@@ -9,15 +9,15 @@ struct Star
 	Color color = SKYBLUE;
 	float size = 0;
 
-	Star()
+	Star() noexcept
 	{
 		initPosition.x = GetRandomValue(-150, GetScreenWidth() + 150);
 		initPosition.y = GetRandomValue(0, GetScreenHeight());
 		size = GetRandomValue(1, 4) / 2;
 	}
 
-	void Update(float starOffset);
-	void Render();
+	void Update(float starOffset) noexcept;
+	void Render() const noexcept;
 };
 
 struct Background
@@ -25,7 +25,7 @@ struct Background
 	std::vector<Star> Stars;
 
 	void Initialize(int starAmount);
-	void Update(float offset);
+	void Update(float offset) noexcept;
 	void Render();
 
 };
