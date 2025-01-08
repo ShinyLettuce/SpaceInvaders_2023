@@ -45,13 +45,15 @@ void GameStateManager::update()
 
 	switch (stateStack.top())
 	{
-	case GameState::STARTSCREEN:
+		using enum GameState;
+
+	case STARTSCREEN:
 		startScreenState();
 		break;
-	case GameState::GAMEPLAY:
+	case GAMEPLAY:
 		gameplayState();
 		break;
-	case GameState::ENDSCREEN:
+	case ENDSCREEN:
 		endScreenState();
 		break;
 	}
