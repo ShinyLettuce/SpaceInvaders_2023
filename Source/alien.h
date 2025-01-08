@@ -15,8 +15,6 @@ public:
 	bool active = true;
 	bool moveRight = true;
 
-	EntityType type = EntityType::ENEMY;
-
 	int speed = 2;
 
 	void Update();

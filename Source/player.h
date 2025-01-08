@@ -23,8 +23,6 @@ public:
 	int activeTexture = 0;
 	float timer = 0;
 
-	EntityType type = EntityType::PLAYER;
-
 	void Render(const MyTexture2D& texture);
 	void Update();
 
