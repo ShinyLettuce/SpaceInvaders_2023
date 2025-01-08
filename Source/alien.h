@@ -1,6 +1,5 @@
 #pragma once
 #include "raylib.h"
-#include "entitytype.h"
 #include "mytexture2d.h"
 
 struct Alien

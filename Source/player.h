@@ -1,6 +1,5 @@
 #pragma once
 #include "raylib.h"
-#include "entitytype.h"
 #include <iostream>
 #include "mytexture2d.h"
 

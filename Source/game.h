@@ -6,7 +6,6 @@
 #include "alien.h"
 #include "player.h"
 #include "projectile.h"
-#include "entitytype.h"
 #include <vector>
 #include <array>
 #include <string>
@@ -36,6 +35,7 @@ public:
 	bool circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 lineTop, Vector2 lineBottom);
 
 	void createPlayerProjectile();
+	void createEnemyProjectile();
 	void removeDeadEntities();
 	void checkCollisions();
 
@@ -46,7 +46,8 @@ public:
 	MyTexture2D laserTexture{ "./Assets/Laser.png" };
 
 	Player player;
-	std::vector<Projectile> Projectiles;
+	std::vector<Projectile> playerProjectiles;
+	std::vector<Projectile> enemyProjectiles;
 	std::vector<Wall> Walls;
 	std::vector<Alien> Aliens;
 	Background background;
