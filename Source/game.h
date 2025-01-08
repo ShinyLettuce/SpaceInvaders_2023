@@ -59,8 +59,6 @@ struct Game
 	bool circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 lineTop, Vector2 lineBottom);
 	bool CheckNewHighScore();
 	void InsertNewHighScore(std::string name);
-	void LoadLeaderboard();
-	void SaveLeaderboard();
 
 	void createPlayerProjectile();
 	void removeDeadEntities();
