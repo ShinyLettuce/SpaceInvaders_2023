@@ -39,7 +39,7 @@ void Game::Start()
 
 	}
 
-	Player newPlayer;
+	Player const newPlayer;
 	player = newPlayer;
 
 	SpawnAliens();
@@ -88,8 +88,8 @@ void Game::Update() //TODO: split into several functions
 	}
 
 	// Update background with offset
-	playerPos = { player.x_pos, (float)player.player_base_height };
-	cornerPos = { 0, (float)player.player_base_height };
+	playerPos = { player.x_pos, player.player_base_height };
+	cornerPos = { 0, player.player_base_height };
 	offset = lineLength(playerPos, cornerPos) * -1;
 	background.Update(offset / 15);
 
@@ -150,7 +150,7 @@ void Game::Render()
 			w.Render(barrierTexture);
 		}
 
-		for (Alien& a : Aliens)
+		for (const Alien& a : Aliens)
 		{
 			a.Render(alienTexture);
 		}
@@ -160,7 +160,7 @@ void Game::SpawnAliens()
 {
 	for (int row = 0; row < formationHeight; row++) {
 		for (int col = 0; col < formationWidth; col++) {
-			Alien newAlien = Alien();
+			Alien newAlien;
 			newAlien.active = true;
 			newAlien.position.x = formationX + 450 + (col * alienSpacing);
 			newAlien.position.y = formationY + (row * alienSpacing);
