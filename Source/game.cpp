@@ -116,7 +116,7 @@ void Game::Update() //TODO: split into several functions
 		}
 
 		//Spawn new aliens if aliens run out
-		if (Aliens.size() < 1)
+		if (Aliens.empty())
 		{
 			SpawnAliens();
 		}
