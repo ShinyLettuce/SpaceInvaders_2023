@@ -16,23 +16,16 @@
 
 class Game
 {
-public:
-	int score;
-
-	// for later, make a file where you can adjust the number of walls (config file) 
-	int wallCount = 5;
-
-	//Aliens shooting
-	float shootTimer = 0;
-
-	//Aliens stuff? (idk cause liv wrote this)
-	Rectangle rec = { 0, 0 ,0 ,0 }; 
-
 	int formationWidth = 8;
 	int formationHeight = 5;
 	int alienSpacing = 80;
 	int formationX = 100;
 	int formationY = 50;
+	int wallCount = 5;
+	float shootTimer = 0;
+	Rectangle rec = { 0, 0 ,0 ,0 }; 
+public:
+	int score;
 	bool gameOver = false;
 
 	void Start();
