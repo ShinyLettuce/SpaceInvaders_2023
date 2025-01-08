@@ -10,13 +10,9 @@ void EndScreen::InsertNewHighScore(std::string name)
 	{
 		if (newData.score > Leaderboard[i].score)
 		{
-
 			Leaderboard.insert(Leaderboard.begin() + i, newData);
-
 			Leaderboard.pop_back();
-
-			i = Leaderboard.size();
-
+			break;
 		}
 	}
 }
@@ -39,53 +35,38 @@ void EndScreen::update()
 
 		if (mouseOnText)
 		{
-			// Set the window's cursor to the I-Beam
 			SetMouseCursor(MOUSE_CURSOR_IBEAM);
-
-			// Get char pressed on the queue
 			int key = GetCharPressed();
 
-			// Check if more characters have been pressed on the same frame
 			while (key > 0)
 			{
-				// NOTE: Only allow keys in range [32..125]
 				if ((key >= 32) && (key <= 125) && (letterCount < 9))
 				{
 					name[letterCount] = (char)key;
-					name[letterCount + 1] = '\0'; // Add null terminator at the end of the string.
+					name[letterCount + 1] = '\0';
 					letterCount++;
 				}
-
-				key = GetCharPressed();  // Check next character in the queue
+				key = GetCharPressed();
 			}
 
-			//Remove chars 
 			if (IsKeyPressed(KEY_BACKSPACE))
 			{
 				letterCount--;
 				if (letterCount < 0) letterCount = 0;
 				name[letterCount] = '\0';
 			}
-		}
-		else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-
-		if (mouseOnText)
-		{
 			framesCounter++;
 		}
 		else
 		{
+			SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 			framesCounter = 0;
 		}
 
-		// If the name is right legth and enter is pressed, exit screen by setting highscore to false and add 
-		// name + score to scoreboard
 		if (letterCount > 0 && letterCount < 9 && IsKeyReleased(KEY_ENTER))
 		{
 			std::string nameEntry(name);
-
 			InsertNewHighScore(nameEntry);
-
 			newHighScore = false;
 		}
 	}
@@ -96,14 +77,12 @@ void EndScreen::render()
 	if (newHighScore)
 	{
 		DrawText("NEW HIGHSCORE!", 600, 300, 60, YELLOW);
-
-		// BELOW CODE IS FOR NAME INPUT RENDER
 		DrawText("PLACE MOUSE OVER INPUT BOX!", 600, 400, 20, YELLOW);
 
 		DrawRectangleRec(textBox, LIGHTGRAY);
+
 		if (mouseOnText)
 		{
-			// HOVER CONFIRMIATION
 			DrawRectangleLines((int)textBox.x, (int)textBox.y, (int)textBox.width, (int)textBox.height, RED);
 		}
 		else
@@ -126,14 +105,12 @@ void EndScreen::render()
 				{
 					DrawText("_", (int)textBox.x + 8 + MeasureText(name, 40), (int)textBox.y + 12, 40, MAROON);
 				}
-
 			}
 			else
 			{
 				//Name needs to be shorter
 				DrawText("Press BACKSPACE to delete chars...", 600, 650, 20, YELLOW);
 			}
-
 		}
 
 		// Explain how to continue when name is input
