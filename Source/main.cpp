@@ -8,17 +8,12 @@ int main(void)
 
     InitWindow(screenWidth, screenHeight, "SPACE INVADERS");
     SetTargetFPS(60);
-
     GameStateManager game;
-    InitAudioDevice(); //TODO: Do we have audio?
 
     while (!WindowShouldClose())
     {
         game.update();
     }
-
-    CloseAudioDevice();
     CloseWindow(); 
-    std::string filename = "level.txt";  //TODO: WHAT?
     return 0;
 }
