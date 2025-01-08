@@ -26,9 +26,9 @@ void Game::Start()
 {
 	gameOver = false;
 	// creating walls 
-	float window_width = (float)GetScreenWidth();
-	float window_height = (float)GetScreenHeight();
-	float wall_distance = window_width / (wallCount + 1);
+	int window_width = GetScreenWidth();
+	int window_height = GetScreenHeight();
+	int wall_distance = window_width / (wallCount + 1);
 	for (int i = 0; i < wallCount; i++)
 	{
 		Wall newWalls;
