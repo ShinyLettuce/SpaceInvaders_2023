@@ -235,10 +235,10 @@ void Game::checkCollisions()
 
 void Game::createPlayerProjectile()
 {
-	auto window_height = (float)GetScreenHeight();
-	int speed = 15;
-	Vector2 projectilePos(player.x_pos, window_height - 130);
-	Projectile newProjectile(projectilePos, speed);
+	const auto window_height = static_cast<float>(GetScreenHeight());
+	const float speed = 15;
+	const Vector2 projectilePos{ player.x_pos, window_height - 130 };
+	const Projectile newProjectile(projectilePos, speed);
 	playerProjectiles.push_back(newProjectile);
 }
 
@@ -253,8 +253,8 @@ void Game::createEnemyProjectile()
 
 	Vector2 projectilePosition = Aliens[randomAlienIndex].position;
 	projectilePosition.y += 40;
-	int projectileSpeed = -15;
-	Projectile newProjectile(projectilePosition, projectileSpeed);
+	const float projectileSpeed = -15;
+	const Projectile newProjectile(projectilePosition, projectileSpeed);
 	enemyProjectiles.push_back(newProjectile);
 }
 

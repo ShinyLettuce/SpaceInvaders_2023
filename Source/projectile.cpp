@@ -1,10 +1,8 @@
 #include "projectile.h"
 
-void Projectile::Update()
+void Projectile::Update() noexcept
 {
 	position.y -= speed;
-
-	// UPDATE LINE POSITION
 	lineStart.y = position.y - 15;
 	lineEnd.y = position.y + 15;
 
@@ -17,9 +15,8 @@ void Projectile::Update()
 	}
 }
 
-void Projectile::Render(const MyTexture2D& texture)
+void Projectile::Render(const MyTexture2D& texture) const
 {
-	//DrawCircle((int)position.x, (int)position.y, 10, RED);
 	DrawTexturePro(texture.get(),
 		{
 			0,
