@@ -1,16 +1,18 @@
 #pragma once
 #include "raylib.h"
-#include <vector>
-#include <array>
 #include "mytexture2d.h"
-#include <string>
+#include "star.h"
+#include "wall.h"
 #include "alien.h"
 #include "player.h"
 #include "projectile.h"
-#include "star.h"
 #include "entitytype.h"
-#include "wall.h"
+#include <vector>
+#include <array>
+#include <string>
 #include <algorithm>
+#include <iostream>
+#include <chrono>
 
 enum struct State
 {

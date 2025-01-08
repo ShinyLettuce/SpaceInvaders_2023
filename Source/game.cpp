@@ -1,9 +1,4 @@
 #include "game.h"
-#include <iostream>
-#include <vector>
-#include <chrono>
-#include <thread>
-#include <fstream>
 
 // MATH FUNCTIONS
 float lineLength(Vector2 A, Vector2 B)
