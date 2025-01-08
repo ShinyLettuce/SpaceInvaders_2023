@@ -166,6 +166,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\alien.cpp" />
+    <ClCompile Include="Source\endscreen.cpp" />
     <ClCompile Include="Source\game.cpp" />
     <ClCompile Include="Source\gamestatemanager.cpp" />
     <ClCompile Include="Source\level.cpp" />
@@ -178,6 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\alien.h" />
+    <ClInclude Include="Source\endscreen.h" />
     <ClInclude Include="Source\entitytype.h" />
     <ClInclude Include="Source\game.h" />
     <ClInclude Include="Source\gamestatemanager.h" />

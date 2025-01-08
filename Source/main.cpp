@@ -10,7 +10,7 @@ int main(void)
     SetTargetFPS(60);
 
     GameStateManager game;
-    game.stateStack.push(GameStateManager::GameState::GAMEPLAY); //TODO: move into constructor or smtn
+    game.stateStack.push(GameStateManager::GameState::STARTSCREEN); //TODO: move into constructor or smtn
     InitAudioDevice(); //TODO: Do we have audio?
 
     while (!WindowShouldClose())

@@ -1,9 +1,8 @@
 #pragma once
+#include "raylib.h"
 
 class StartScreen
 {
-
-
-	void update();
+public:
 	void render();
 };

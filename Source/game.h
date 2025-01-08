@@ -19,12 +19,6 @@ enum struct State
 	ENDSCREEN
 };
 
-struct PlayerData
-{
-	std::string name;
-	int score;
-};
-
 struct Game
 {
 	State gameState = {};
@@ -44,7 +38,7 @@ struct Game
 	int alienSpacing = 80;
 	int formationX = 100;
 	int formationY = 50;
-	bool newHighScore = false;
+	bool gameOver = false;
 	
 	Game() {
 		gameState = State::STARTSCREEN;
@@ -52,13 +46,10 @@ struct Game
 
 	void Start();
 	void End();
-	void Continue();
 	void Update();
 	void Render();
 	void SpawnAliens();
 	bool circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 lineTop, Vector2 lineBottom);
-	bool CheckNewHighScore();
-	void InsertNewHighScore(std::string name);
 
 	void createPlayerProjectile();
 	void removeDeadEntities();
@@ -74,18 +65,10 @@ struct Game
 	std::vector<Projectile> Projectiles;
 	std::vector<Wall> Walls;
 	std::vector<Alien> Aliens;
-	std::vector<PlayerData> Leaderboard = { {"Player 1", 500}, {"Player 2", 400}, {"Player 3", 300}, {"Player 4", 200}, {"Player 5", 100} };
 	Background background;
 
 	Vector2 playerPos;
 	Vector2 alienPos; 
 	Vector2 cornerPos;
 	float offset;
-
-	//TEXTBOX ENTER
-	char name[9 + 1] = "\0";      //One extra space required for null terminator char '\0'
-	int letterCount = 0;
-	Rectangle textBox = { 600, 500, 225, 50 };
-	bool mouseOnText = false;
-	int framesCounter = 0;
 };
