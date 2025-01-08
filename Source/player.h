@@ -9,7 +9,7 @@ struct Player
 public:
 	Player()
 	{
-		float window_width = (float)GetScreenWidth();
+		float window_width = static_cast<float>(GetScreenWidth());
 		x_pos = window_width / 2;
 		std::cout << "Find Player -X:" << GetScreenWidth() / 2 << "Find Player -Y" << GetScreenHeight() - player_base_height << std::endl;
 	}

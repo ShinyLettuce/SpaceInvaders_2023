@@ -14,16 +14,9 @@
 #include <iostream>
 #include <chrono>
 
-enum struct State
+class Game
 {
-	STARTSCREEN,
-	GAMEPLAY,
-	ENDSCREEN
-};
-
-struct Game
-{
-	State gameState = {};
+public:
 	int score;
 
 	// for later, make a file where you can adjust the number of walls (config file) 
@@ -41,10 +34,6 @@ struct Game
 	int formationX = 100;
 	int formationY = 50;
 	bool gameOver = false;
-	
-	Game() {
-		gameState = State::STARTSCREEN;
-	}
 
 	void Start();
 	void End();
@@ -69,8 +58,8 @@ struct Game
 	std::vector<Alien> Aliens;
 	Background background;
 
-	Vector2 playerPos;
-	Vector2 alienPos; 
-	Vector2 cornerPos;
+	Vector2 playerPos = { 0, 0 };
+	Vector2 alienPos = { 0, 0 };
+	Vector2 cornerPos = { 0, 0 };
 	float offset;
 };
