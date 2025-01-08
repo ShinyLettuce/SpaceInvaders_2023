@@ -24,17 +24,17 @@ void Background::Initialize(int starAmount)
 
 void Background::Update(float offset)
 {
-	for (int i = 0; i < Stars.size(); i++) //TODO: change to ranged for
+	for (Star& star : Stars) //TODO: change to ranged for
 	{
-		Stars[i].Update(offset);
+		star.Update(offset);
 	}
 
 }
 
 void Background::Render()
 {
-	for (int i = 0; i < Stars.size(); i++) //TODO: change to ranged for
+	for (Star& star : Stars) //TODO: change to ranged for
 	{
-		Stars[i].Render();
+		star.Render();
 	}
 }
