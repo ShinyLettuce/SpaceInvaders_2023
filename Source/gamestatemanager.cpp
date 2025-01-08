@@ -28,10 +28,6 @@ void GameStateManager::gameplayState()
 
 void GameStateManager::endScreenState()
 {
-	endScreen.update();
-	ClearBackground(BLACK);
-	endScreen.render();
-
 	if (IsKeyReleased(KEY_ENTER) && !endScreen.newHighScore)
 	{
 		while (stateStack.top() != GameState::STARTSCREEN)
@@ -39,6 +35,10 @@ void GameStateManager::endScreenState()
 			stateStack.pop();
 		}
 	}
+
+	endScreen.update();
+	ClearBackground(BLACK);
+	endScreen.render();
 }
 
 void GameStateManager::update()
