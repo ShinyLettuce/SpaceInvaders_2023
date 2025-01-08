@@ -16,6 +16,6 @@ public:
 		position{ _position }
 	{}
 
-	void Update();
+	void Update() noexcept;
 	void Render(const MyTexture2D& texture) const;
 };
