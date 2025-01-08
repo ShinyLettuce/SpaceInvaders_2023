@@ -7,6 +7,12 @@
 struct Player
 {
 public:
+	Player()
+	{
+		float window_width = (float)GetScreenWidth();
+		x_pos = window_width / 2;
+		std::cout << "Find Player -X:" << GetScreenWidth() / 2 << "Find Player -Y" << GetScreenHeight() - player_base_height << std::endl;
+	}
 
 	float x_pos = 0;
 	float speed = 7;
@@ -19,7 +25,6 @@ public:
 
 	EntityType type = EntityType::PLAYER;
 
-	void Initialize();
 	void Render(const MyTexture2D& texture);
 	void Update();
 

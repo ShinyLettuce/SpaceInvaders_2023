@@ -47,7 +47,6 @@ void Game::Start()
 
 	Player newPlayer;
 	player = newPlayer;
-	player.Initialize();
 
 	SpawnAliens();
 
