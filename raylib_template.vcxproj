@@ -167,22 +167,26 @@
   <ItemGroup>
     <ClCompile Include="Source\alien.cpp" />
     <ClCompile Include="Source\game.cpp" />
+    <ClCompile Include="Source\gamestatemanager.cpp" />
     <ClCompile Include="Source\level.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\player.cpp" />
     <ClCompile Include="Source\projectile.cpp" />
     <ClCompile Include="Source\star.cpp" />
+    <ClCompile Include="Source\startscreen.cpp" />
     <ClCompile Include="Source\wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\alien.h" />
     <ClInclude Include="Source\entitytype.h" />
     <ClInclude Include="Source\game.h" />
+    <ClInclude Include="Source\gamestatemanager.h" />
     <ClInclude Include="Source\level.h" />
     <ClInclude Include="Source\player.h" />
     <ClInclude Include="Source\projectile.h" />
     <ClInclude Include="Source\mytexture2d.h" />
     <ClInclude Include="Source\star.h" />
+    <ClInclude Include="Source\startscreen.h" />
     <ClInclude Include="Source\wall.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
