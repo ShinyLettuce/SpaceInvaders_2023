@@ -11,12 +11,11 @@ public:
 	Vector2 position = { 0, 0 };
 	int x = 0;
 	int y = 0;
+	float speed = 2;
 	float radius = 30;
 	bool active = true;
 	bool moveRight = true;
 
-	int speed = 2;
-
-	void Update();
-	void Render(const MyTexture2D& texture);
+	void Update() noexcept;
+	void Render(const MyTexture2D& texture) const noexcept;
 };

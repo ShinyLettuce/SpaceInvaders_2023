@@ -1,14 +1,14 @@
 #include "alien.h"
 
-void Alien::Update()
+void Alien::Update() noexcept
 {
-	int window_width = GetScreenWidth();
+	auto const window_width = static_cast<float>(GetScreenWidth());
 
 	if (moveRight)
 	{
 		position.x += speed;
 
-		if (position.x >= GetScreenWidth())
+		if (position.x >= window_width)
 		{
 			moveRight = false;
 			position.y += 50;
@@ -26,7 +26,7 @@ void Alien::Update()
 	}
 }
 
-void Alien::Render(const MyTexture2D& texture)
+void Alien::Render(const MyTexture2D& texture) const noexcept
 {
 	DrawTexturePro(texture.get(),
 		{
@@ -42,5 +42,5 @@ void Alien::Render(const MyTexture2D& texture)
 			100,
 		}, { 50 , 50 },
 		0,
-		WHITE);
+		color);
 }
