@@ -26,9 +26,9 @@ void Game::Start()
 {
 	gameOver = false;
 	// creating walls 
-	int window_width = GetScreenWidth();
-	int window_height = GetScreenHeight();
-	int wall_distance = window_width / (wallCount + 1);
+	const int window_width = GetScreenWidth();
+	const int window_height = GetScreenHeight();
+	const int wall_distance = window_width / (wallCount + 1);
 	for (int i = 0; i < wallCount; i++)
 	{
 		Wall newWalls;
@@ -236,7 +236,7 @@ void Game::checkCollisions()
 void Game::createPlayerProjectile()
 {
 	const auto window_height = static_cast<float>(GetScreenHeight());
-	const float speed = 15;
+	constexpr float speed = 15;
 	const Vector2 projectilePos{ player.x_pos, window_height - 130 };
 	const Projectile newProjectile(projectilePos, speed);
 	playerProjectiles.push_back(newProjectile);
@@ -265,27 +265,27 @@ bool Game::circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 li
 		return true;
 	}
 
-	Vector2 A = lineStart;
-	Vector2 B = lineEnd;
-	Vector2 C = circlePos;
+	const Vector2 A = lineStart;
+	const Vector2 B = lineEnd;
+	const Vector2 C = circlePos;
 
-	float length = lineLength(A, B);
+	const float length = lineLength(A, B);
 
-	float dotP = (((C.x - A.x) * (B.x - A.x)) + ((C.y - A.y) * (B.y - A.y))) / pow(length, 2);
+	const float dotP = (((C.x - A.x) * (B.x - A.x)) + ((C.y - A.y) * (B.y - A.y))) / pow(length, 2);
 
-	float closestX = A.x + (dotP * (B.x - A.x));
-	float closestY = A.y + (dotP * (B.y - A.y));
+	const float closestX = A.x + (dotP * (B.x - A.x));
+	const float closestY = A.y + (dotP * (B.y - A.y));
 
-	float buffer = 0.1;
+	constexpr float buffer = 0.1f;
 
-	float closeToStart = lineLength(A, { closestX, closestY });
-	float closeToEnd = lineLength(B, { closestX, closestY });
+	const float closeToStart = lineLength(A, { closestX, closestY });
+	const float closeToEnd = lineLength(B, { closestX, closestY });
 
-	float closestLength = closeToStart + closeToEnd;
+	const float closestLength = closeToStart + closeToEnd;
 
 	if (closestLength == length + buffer || closestLength == length - buffer)
 	{
-		float closeToCentre = lineLength(A, { closestX, closestY });
+		const float closeToCentre = lineLength(A, { closestX, closestY });
 
 		if (closeToCentre < circleRadius)
 		{
