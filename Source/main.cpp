@@ -15,11 +15,7 @@ int main(void)
 
     while (!WindowShouldClose())
     {
-        BeginDrawing();
-
         game.update();
-
-        EndDrawing();
     }
 
     CloseAudioDevice();

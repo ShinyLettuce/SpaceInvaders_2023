@@ -2,7 +2,6 @@
 
 void GameStateManager::startScreenState()
 {
-	ClearBackground(BLACK);
 	startScreen.render();
 
 	if (IsKeyReleased(KEY_SPACE))
@@ -15,7 +14,6 @@ void GameStateManager::startScreenState()
 void GameStateManager::gameplayState()
 {
 	game.Update();
-	ClearBackground(BLACK);
 	game.Render();
 
 	if (game.gameOver)
@@ -37,12 +35,14 @@ void GameStateManager::endScreenState()
 	}
 
 	endScreen.update();
-	ClearBackground(BLACK);
 	endScreen.render();
 }
 
 void GameStateManager::update()
 {
+	BeginDrawing();
+	ClearBackground(BLACK);
+
 	switch (stateStack.top())
 	{
 	case GameState::STARTSCREEN:
@@ -55,4 +55,6 @@ void GameStateManager::update()
 		endScreenState();
 		break;
 	}
+
+	EndDrawing();
 }
