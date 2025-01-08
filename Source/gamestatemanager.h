@@ -21,6 +21,11 @@ public:
 	EndScreen endScreen;
 	std::stack<GameState> stateStack;
 
+	GameStateManager()
+	{
+		stateStack.push(GameState::STARTSCREEN);
+	}
+
 	void startScreenState();
 	void gameplayState();
 	void endScreenState();
