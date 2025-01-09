@@ -11,9 +11,9 @@ struct Star
 
 	Star() noexcept
 	{
-		initPosition.x = GetRandomValue(-150, GetScreenWidth() + 150);
-		initPosition.y = GetRandomValue(0, GetScreenHeight());
-		size = GetRandomValue(1, 4) / 2;
+		initPosition.x = static_cast<float>(GetRandomValue(-150, GetScreenWidth() + 150));
+		initPosition.y = static_cast<float>(GetRandomValue(0, GetScreenHeight()));
+		size = static_cast<float>(GetRandomValue(1, 4) / 2);
 	}
 
 	void Update(float starOffset) noexcept;
