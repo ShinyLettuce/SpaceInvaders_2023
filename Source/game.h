@@ -32,15 +32,15 @@ class Game
 	Player player;
 	std::vector<Projectile> playerProjectiles;
 	std::vector<Projectile> enemyProjectiles;
-	std::vector<Wall> Walls;
-	std::vector<Alien> Aliens;
+	std::vector<Wall> walls;
+	std::vector<Alien> aliens;
 	Background background;
 
 	int score;
 	bool gameOver = false;
 
-	void End();
-	void SpawnAliens();
+	void end();
+	void spawnAliens();
 	void spawnWalls();
 	bool circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 lineTop, Vector2 lineBottom);
 	void createPlayerProjectile();
@@ -49,9 +49,9 @@ class Game
 	void checkCollisions();
 public:
 
-	void Start();
-	void Update();
-	void Render();
+	void start();
+	void update();
+	void render();
 
 	bool isGameOver() const noexcept { return gameOver; }
 	int getScore() const noexcept{ return score; }

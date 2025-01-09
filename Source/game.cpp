@@ -22,55 +22,55 @@ bool pointInCircle(Vector2 circlePos, float radius, Vector2 point)
 	}
 }
 
-void Game::Start()
+void Game::start()
 {
 	gameOver = false;
 	spawnWalls();
 	Player const newPlayer;
 	player = newPlayer;
-	SpawnAliens();
+	spawnAliens();
 	Background newBackground;
 	newBackground.Initialize(600);
 	background = newBackground;
 	score = 0;
 }
 
-void Game::End()
+void Game::end()
 {
 	enemyProjectiles.clear();
 	playerProjectiles.clear();
-	Walls.clear();
-	Aliens.clear();
+	walls.clear();
+	aliens.clear();
 	gameOver = true;
 }
 
-void Game::Update() //TODO: split into several functions
+void Game::update() //TODO: split into several functions
 {
 	if (IsKeyReleased(KEY_Q))
 	{
-		End();
+		end();
 	}
 
 	player.Update();
 
-	for (Alien& a : Aliens)
+	for (Alien& a : aliens)
 	{
 		a.Update();
 
 		if (a.position.y > GetScreenHeight() - player.player_base_height)
 		{
-			End();
+			end();
 		}
 	}
 
 	if (player.lives < 1)
 	{
-		End();
+		end();
 	}
 
-	if (Aliens.empty())
+	if (aliens.empty())
 	{
-		SpawnAliens();
+		spawnAliens();
 	}
 
 	background.Update(-player.x_pos / 15);
@@ -83,7 +83,7 @@ void Game::Update() //TODO: split into several functions
 	{
 		p.Update();
 	}
-	for (Wall& w : Walls)
+	for (Wall& w : walls)
 	{
 		w.Update();
 	}
@@ -105,7 +105,7 @@ void Game::Update() //TODO: split into several functions
 	removeDeadEntities();
 }
 
-void Game::Render()
+void Game::render()
 {
 	background.Render();
 
@@ -122,17 +122,17 @@ void Game::Render()
 	{
 		p.Render(laserTexture);
 	}
-	for (Wall& w : Walls)
+	for (Wall& w : walls)
 	{
 		w.Render(barrierTexture);
 	}
-	for (const Alien& a : Aliens)
+	for (const Alien& a : aliens)
 	{
 		a.Render(alienTexture);
 	}
 }
 
-void Game::SpawnAliens()
+void Game::spawnAliens()
 {
 	for (int row = 0; row < formationHeight; row++) {
 		for (int col = 0; col < formationWidth; col++) {
@@ -140,7 +140,7 @@ void Game::SpawnAliens()
 			newAlien.active = true;
 			newAlien.position.x = formationX + 450 + (col * alienSpacing);
 			newAlien.position.y = formationY + (row * alienSpacing);
-			Aliens.push_back(newAlien);
+			aliens.push_back(newAlien);
 			std::cout << "Find Alien -X:" << newAlien.position.x << std::endl;
 			std::cout << "Find Alien -Y:" << newAlien.position.y << std::endl;
 		}
@@ -158,7 +158,7 @@ void Game::spawnWalls()
 		newWalls.position.y = window_height - 250;
 		newWalls.position.x = wall_distance * (i + 1);
 
-		Walls.push_back(newWalls);
+		walls.push_back(newWalls);
 	}
 }
 
@@ -174,22 +174,22 @@ void Game::removeDeadEntities()
 			[](const Projectile& p) { return !p.active; }),
 		enemyProjectiles.end());
 
-	Aliens.erase(
-		std::remove_if(Aliens.begin(), Aliens.end(),
+	aliens.erase(
+		std::remove_if(aliens.begin(), aliens.end(),
 			[](const Alien& a) { return !a.active; }),
-		Aliens.end());
+		aliens.end());
 
-	Walls.erase(
-		std::remove_if(Walls.begin(), Walls.end(),
+	walls.erase(
+		std::remove_if(walls.begin(), walls.end(),
 			[](const Wall& w) { return !w.active; }),
-		Walls.end());
+		walls.end());
 }
 
 void Game::checkCollisions()
 {
 	for (Projectile& p : playerProjectiles)
 	{
-		for (Alien& a : Aliens)
+		for (Alien& a : aliens)
 		{
 			if (circleLineCollision(a.position, a.radius, p.lineStart, p.lineEnd))
 			{
@@ -198,7 +198,7 @@ void Game::checkCollisions()
 				score += 100;
 			}
 		}
-		for (Wall& w : Walls)
+		for (Wall& w : walls)
 		{
 			if (circleLineCollision(w.position, w.radius, p.lineStart, p.lineEnd))
 			{
@@ -216,7 +216,7 @@ void Game::checkCollisions()
 			player.lives -= 1;
 		}
 
-		for (Wall& w : Walls)
+		for (Wall& w : walls)
 		{
 			if (circleLineCollision(w.position, w.radius, p.lineStart, p.lineEnd))
 			{
@@ -240,12 +240,12 @@ void Game::createEnemyProjectile()
 {
 	int randomAlienIndex = 0;
 
-	if (Aliens.size() > 1)
+	if (aliens.size() > 1)
 	{
-		randomAlienIndex = rand() % Aliens.size();
+		randomAlienIndex = rand() % aliens.size();
 	}
 
-	Vector2 projectilePosition = Aliens[randomAlienIndex].position;
+	Vector2 projectilePosition = aliens[randomAlienIndex].position;
 	projectilePosition.y += 40;
 	const float projectileSpeed = -15;
 	const Projectile newProjectile(projectilePosition, projectileSpeed);

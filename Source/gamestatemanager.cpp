@@ -7,14 +7,14 @@ void GameStateManager::startScreenState()
 	if (IsKeyReleased(KEY_SPACE))
 	{
 		stateStack.push(GameState::GAMEPLAY);
-		game.Start();
+		game.start();
 	}
 }
 
 void GameStateManager::gameplayState()
 {
-	game.Update();
-	game.Render();
+	game.update();
+	game.render();
 
 	if (game.isGameOver())
 	{
