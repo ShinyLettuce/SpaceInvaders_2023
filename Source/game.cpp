@@ -28,7 +28,7 @@ void Game::start()
 
 void Game::end() noexcept
 {
-	enemyProjectiles.clear();
+	enemyProjectile.active = false;
 	playerProjectiles.clear();
 	walls.clear();
 	aliens.clear();
@@ -66,11 +66,8 @@ void Game::update() //TODO: split into several functions
 
 	background.Update(-player.x_pos / 15);
 
+	enemyProjectile.Update();
 	for (Projectile& p : playerProjectiles)
-	{
-		p.Update();
-	}
-	for (Projectile& p : enemyProjectiles)
 	{
 		p.Update();
 	}
@@ -86,12 +83,12 @@ void Game::update() //TODO: split into several functions
 		createPlayerProjectile();
 	}
 
-	shootTimer += 1;
-	if (shootTimer > 59)
+	if (!enemyProjectile.active && shootTimer > 59)
 	{
 		createEnemyProjectile();
 		shootTimer = 0;
 	}
+	shootTimer++;
 
 	removeDeadEntities();
 }
@@ -105,11 +102,8 @@ void Game::render()
 
 	player.Render(shipTextures[player.activeTexture]);
 
+	enemyProjectile.Render(laserTexture);
 	for (const Projectile& p : playerProjectiles)
-	{
-		p.Render(laserTexture);
-	}
-	for (const Projectile& p : enemyProjectiles)
 	{
 		p.Render(laserTexture);
 	}
@@ -158,11 +152,6 @@ void Game::removeDeadEntities()
 			[](const Projectile& p) { return !p.active; }),
 		playerProjectiles.end());
 
-	enemyProjectiles.erase(
-		std::remove_if(enemyProjectiles.begin(), enemyProjectiles.end(),
-			[](const Projectile& p) { return !p.active; }),
-		enemyProjectiles.end());
-
 	aliens.erase(
 		std::remove_if(aliens.begin(), aliens.end(),
 			[](const Alien& a) { return !a.active; }),
@@ -196,22 +185,19 @@ void Game::checkCollisions() noexcept
 			}
 		}
 	}
-	for (Projectile& p : enemyProjectiles)
+
+	if (circleLineCollision({ player.x_pos, GetScreenHeight() - player.player_base_height }, player.radius, enemyProjectile.lineStart, enemyProjectile.lineEnd))
 	{
+		enemyProjectile.active = false;
+		player.lives -= 1;
+	}
 
-		if (circleLineCollision({ player.x_pos, GetScreenHeight() - player.player_base_height }, player.radius, p.lineStart, p.lineEnd))
+	for (Wall& w : walls)
+	{
+		if (circleLineCollision(w.position, w.radius, enemyProjectile.lineStart, enemyProjectile.lineEnd))
 		{
-			p.active = false;
-			player.lives -= 1;
-		}
-
-		for (Wall& w : walls)
-		{
-			if (circleLineCollision(w.position, w.radius, p.lineStart, p.lineEnd))
-			{
-				p.active = false;
-				w.health -= 1;
-			}
+			enemyProjectile.active = false;
+			w.health -= 1;
 		}
 	}
 }
@@ -236,9 +222,9 @@ void Game::createEnemyProjectile()
 
 	Vector2 projectilePosition = aliens[randomAlienIndex].position;
 	projectilePosition.y += 40;
-	constexpr float projectileSpeed = -15;
-	const Projectile newProjectile(projectilePosition, projectileSpeed);
-	enemyProjectiles.push_back(newProjectile);
+	enemyProjectile.position = projectilePosition;
+	enemyProjectile.speed = -15;
+	enemyProjectile.active = true;
 }
 
 bool Game::circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 lineStart, Vector2 lineEnd) const noexcept
