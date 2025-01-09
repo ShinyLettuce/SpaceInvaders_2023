@@ -204,8 +204,8 @@ void Game::checkCollisions() noexcept
 
 void Game::createPlayerProjectile()
 {
-	const auto window_height = static_cast<float>(GetScreenHeight());
 	constexpr float speed = 15;
+	const auto window_height = static_cast<float>(GetScreenHeight());
 	const Vector2 projectilePos{ player.x_pos, window_height - 130 };
 	const Projectile newProjectile(projectilePos, speed);
 	playerProjectiles.push_back(newProjectile);
