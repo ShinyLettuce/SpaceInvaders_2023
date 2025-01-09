@@ -24,9 +24,6 @@
     <ClCompile Include="Source\star.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\level.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\alien.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -56,9 +53,6 @@
     <ClInclude Include="Source\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\level.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\alien.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -71,9 +65,6 @@
     <ClInclude Include="Source\projectile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\entitytype.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\mytexture2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -84,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\endscreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\mathutils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

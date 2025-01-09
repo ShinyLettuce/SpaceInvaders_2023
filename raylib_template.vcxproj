@@ -181,6 +181,7 @@
     <ClInclude Include="Source\endscreen.h" />
     <ClInclude Include="Source\game.h" />
     <ClInclude Include="Source\gamestatemanager.h" />
+    <ClInclude Include="Source\mathutils.h" />
     <ClInclude Include="Source\player.h" />
     <ClInclude Include="Source\projectile.h" />
     <ClInclude Include="Source\mytexture2d.h" />

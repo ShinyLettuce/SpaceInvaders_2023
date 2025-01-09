@@ -10,6 +10,7 @@
 #include <array>
 #include <string>
 #include <algorithm>
+#include "mathutils.h"
 
 class Game
 {
@@ -39,7 +40,6 @@ class Game
 	void end() noexcept;
 	void spawnAliens();
 	void spawnWalls();
-	bool circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 lineTop, Vector2 lineBottom) const noexcept;
 	void createPlayerProjectile();
 	void createEnemyProjectile();
 	void removeDeadEntities();
