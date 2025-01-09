@@ -4,35 +4,26 @@
 static float lineLength(Vector2 A, Vector2 B) noexcept
 {
 	const float length = sqrtf(pow(B.x - A.x, 2.f) + pow(B.y - A.y, 2.f));
-
 	return length;
 }
 
 static bool pointInCircle(Vector2 circlePos, float radius, Vector2 point) noexcept
 {
 	const float distanceToCentre = lineLength(circlePos, point);
-
-	if (distanceToCentre < radius)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return (distanceToCentre < radius);
 }
 
 void Game::start()
 {
+	score = 0;
 	gameOver = false;
-	spawnWalls();
 	Player const newPlayer;
 	player = newPlayer;
+	spawnWalls();
 	spawnAliens();
 	Background newBackground;
 	newBackground.Initialize(600);
 	background = newBackground;
-	score = 0;
 }
 
 void Game::end() noexcept
@@ -122,7 +113,7 @@ void Game::render()
 	{
 		p.Render(laserTexture);
 	}
-	for (Wall& w : walls)
+	for (const Wall& w : walls)
 	{
 		w.Render(barrierTexture);
 	}
@@ -183,7 +174,7 @@ void Game::removeDeadEntities()
 		walls.end());
 }
 
-void Game::checkCollisions()
+void Game::checkCollisions() noexcept
 {
 	for (Projectile& p : playerProjectiles)
 	{
