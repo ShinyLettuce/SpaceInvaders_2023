@@ -13,12 +13,6 @@ void Projectile::Update() noexcept
 	{
 		active = false;
 	}
-
-	if (!active)
-	{
-		position ={-99, -99};
-		speed = 0;
-	}
 }
 
 void Projectile::Render(const MyTexture2D& texture) const

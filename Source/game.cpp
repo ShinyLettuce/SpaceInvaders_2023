@@ -22,37 +22,32 @@ void Game::end() noexcept
 	gameOver = true;
 }
 
-void Game::update() //TODO: split into several functions
+void Game::checkForGameOver()
 {
 	if (IsKeyReleased(KEY_Q))
 	{
 		end();
 	}
-
-	player.Update();
-
+	if (player.lives < 1)
+	{
+		end();
+	}
 	for (Alien& a : aliens)
 	{
-		a.Update();
-
 		if (a.position.y > static_cast<float>(GetScreenHeight()) - player.player_base_height)
 		{
 			end();
 		}
 	}
 
-	if (player.lives < 1)
-	{
-		end();
-	}
+}
 
-	if (aliens.empty())
-	{
-		spawnAliens();
-	}
+void Game::update()
+{
+	checkForGameOver();
 
+	player.Update();
 	background.Update(-player.x_pos / 15);
-
 	enemyProjectile.Update();
 	for (Projectile& p : playerProjectiles)
 	{
@@ -61,6 +56,14 @@ void Game::update() //TODO: split into several functions
 	for (Wall& w : walls)
 	{
 		w.Update();
+	}
+	for (Alien& a : aliens)
+	{
+		a.Update();
+	}
+	if (aliens.empty())
+	{
+		spawnAliens();
 	}
 
 	checkCollisions();
@@ -148,6 +151,12 @@ void Game::removeDeadEntities()
 		std::remove_if(walls.begin(), walls.end(),
 			[](const Wall& w) { return !w.active; }),
 		walls.end());
+
+	if (!enemyProjectile.active)
+	{
+		enemyProjectile.position = { -99, -99 };
+		enemyProjectile.speed = 0;
+	}
 }
 
 void Game::checkCollisions() noexcept
