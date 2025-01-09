@@ -10,9 +10,9 @@ public:
 	bool active;
 	Color color;
 	int health = 50;
-	int radius = 60;
+	float radius = 60;
 
 
-	void Render(const MyTexture2D& texture);
-	void Update();
+	void Render(const MyTexture2D& texture) const noexcept;
+	void Update() noexcept;
 };

@@ -15,13 +15,15 @@
 
 class Game
 {
+	float shootTimer = 0;
+	float alienSpacing = 80;
+	float formationX = 100;
+	float formationY = 50;
 	int formationWidth = 8;
 	int formationHeight = 5;
-	int alienSpacing = 80;
-	int formationX = 100;
-	int formationY = 50;
 	int wallCount = 5;
-	float shootTimer = 0;
+	int score = 0;
+	bool gameOver = false;
 	Rectangle rec = { 0, 0 ,0 ,0 };
 
 	std::array<MyTexture2D, 3> shipTextures{ MyTexture2D{"./Assets/Ship1.png"}, MyTexture2D{"./Assets/Ship2.png"}, MyTexture2D{"./Assets/Ship3.png"} };
@@ -36,13 +38,11 @@ class Game
 	std::vector<Alien> aliens;
 	Background background;
 
-	int score;
-	bool gameOver = false;
 
-	void end();
+	void end() noexcept;
 	void spawnAliens();
 	void spawnWalls();
-	bool circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 lineTop, Vector2 lineBottom) const;
+	bool circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 lineTop, Vector2 lineBottom) const noexcept;
 	void createPlayerProjectile();
 	void createEnemyProjectile();
 	void removeDeadEntities();

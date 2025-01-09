@@ -26,6 +26,6 @@ struct Background
 
 	void Initialize(int starAmount);
 	void Update(float offset) noexcept;
-	void Render();
+	void Render() const noexcept;
 
 };

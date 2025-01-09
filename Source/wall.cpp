@@ -1,6 +1,6 @@
 #include "wall.h"
 
-void Wall::Render(const MyTexture2D& texture)
+void Wall::Render(const MyTexture2D& texture) const noexcept
 {
 	DrawTexturePro(texture.get(),
 		{
@@ -19,11 +19,11 @@ void Wall::Render(const MyTexture2D& texture)
 		WHITE);
 
 
-	DrawText(TextFormat("%i", health), position.x - 21, position.y + 10, 40, RED);
+	DrawText(TextFormat("%i", health), static_cast<int>(position.x) - 21, static_cast<int>(position.y) + 10, 40, RED);
 
 }
 
-void Wall::Update()
+void Wall::Update() noexcept
 {
 
 	// set walls as inactive when out of health

@@ -1,16 +1,16 @@
 #include "game.h"
 
 // MATH FUNCTIONS
-float lineLength(Vector2 A, Vector2 B)
+static float lineLength(Vector2 A, Vector2 B) noexcept
 {
-	float length = sqrtf(pow(B.x - A.x, 2) + pow(B.y - A.y, 2));
+	const float length = sqrtf(pow(B.x - A.x, 2.f) + pow(B.y - A.y, 2.f));
 
 	return length;
 }
 
-bool pointInCircle(Vector2 circlePos, float radius, Vector2 point)
+static bool pointInCircle(Vector2 circlePos, float radius, Vector2 point) noexcept
 {
-	float distanceToCentre = lineLength(circlePos, point);
+	const float distanceToCentre = lineLength(circlePos, point);
 
 	if (distanceToCentre < radius)
 	{
@@ -35,7 +35,7 @@ void Game::start()
 	score = 0;
 }
 
-void Game::end()
+void Game::end() noexcept
 {
 	enemyProjectiles.clear();
 	playerProjectiles.clear();
@@ -57,7 +57,7 @@ void Game::update() //TODO: split into several functions
 	{
 		a.Update();
 
-		if (a.position.y > GetScreenHeight() - player.player_base_height)
+		if (a.position.y > static_cast<float>(GetScreenHeight()) - player.player_base_height)
 		{
 			end();
 		}
@@ -138,7 +138,7 @@ void Game::spawnAliens()
 		for (int col = 0; col < formationWidth; col++) {
 			Alien newAlien;
 			newAlien.active = true;
-			newAlien.position.x = formationX + 450 + (col * alienSpacing);
+			newAlien.position.x = formationX + 450.f + (col * alienSpacing);
 			newAlien.position.y = formationY + (row * alienSpacing);
 			aliens.push_back(newAlien);
 			std::cout << "Find Alien -X:" << newAlien.position.x << std::endl;
@@ -252,7 +252,7 @@ void Game::createEnemyProjectile()
 	enemyProjectiles.push_back(newProjectile);
 }
 
-bool Game::circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 lineStart, Vector2 lineEnd) const
+bool Game::circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 lineStart, Vector2 lineEnd) const noexcept
 {
 	if (pointInCircle(circlePos, circleRadius, lineStart) || pointInCircle(circlePos, circleRadius, lineEnd))
 	{

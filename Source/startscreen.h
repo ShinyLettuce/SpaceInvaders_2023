@@ -4,5 +4,5 @@
 class StartScreen
 {
 public:
-	void render();
+	void render() const noexcept;
 };

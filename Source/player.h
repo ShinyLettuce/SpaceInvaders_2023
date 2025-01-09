@@ -6,23 +6,21 @@
 struct Player
 {
 public:
-	Player()
+	Player() noexcept
 	{
-		float window_width = static_cast<float>(GetScreenWidth());
+		const auto window_width = static_cast<float>(GetScreenWidth());
 		x_pos = window_width / 2;
-		std::cout << "Find Player -X:" << GetScreenWidth() / 2 << "Find Player -Y" << GetScreenHeight() - player_base_height << std::endl;
 	}
 
+	float timer = 0;
 	float x_pos = 0;
 	float speed = 7;
-	float player_base_height = 70.0f;
 	float radius = 50;
+	float direction = 0;
+	float player_base_height = 70.0f;
 	int lives = 3;
-	int direction = 0;
 	int activeTexture = 0;
-	float timer = 0;
 
-	void Render(const MyTexture2D& texture);
-	void Update();
-
+	void Render(const MyTexture2D& texture) const noexcept;
+	void Update() noexcept;
 };

@@ -1,6 +1,6 @@
 #include "player.h"
 
-void Player::Update()
+void Player::Update() noexcept
 {
 	//Movement
 	direction = 0;
@@ -19,9 +19,9 @@ void Player::Update()
 	{
 		x_pos = 0 + radius;
 	}
-	else if (x_pos > GetScreenWidth() - radius)
+	else if (x_pos > static_cast<float>(GetScreenWidth()) - radius)
 	{
-		x_pos = GetScreenWidth() - radius;
+		x_pos = static_cast<float>(GetScreenWidth()) - radius;
 	}
 
 	//Determine frame for animation
@@ -39,9 +39,9 @@ void Player::Update()
 	}
 }
 
-void Player::Render(const MyTexture2D& texture)
+void Player::Render(const MyTexture2D& texture) const noexcept
 {
-	float window_height = GetScreenHeight();
+	const auto window_height = static_cast<float>(GetScreenHeight());
 
 	DrawTexturePro(texture.get(),
 		{
