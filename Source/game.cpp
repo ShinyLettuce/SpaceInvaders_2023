@@ -141,8 +141,6 @@ void Game::spawnAliens()
 			newAlien.position.x = formationX + 450.f + (col * alienSpacing);
 			newAlien.position.y = formationY + (row * alienSpacing);
 			aliens.push_back(newAlien);
-			std::cout << "Find Alien -X:" << newAlien.position.x << std::endl;
-			std::cout << "Find Alien -Y:" << newAlien.position.y << std::endl;
 		}
 	}
 }
