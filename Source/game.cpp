@@ -25,25 +25,10 @@ bool pointInCircle(Vector2 circlePos, float radius, Vector2 point)
 void Game::Start()
 {
 	gameOver = false;
-	// creating walls 
-	const int window_width = GetScreenWidth();
-	const int window_height = GetScreenHeight();
-	const int wall_distance = window_width / (wallCount + 1);
-	for (int i = 0; i < wallCount; i++)
-	{
-		Wall newWalls;
-		newWalls.position.y = window_height - 250;
-		newWalls.position.x = wall_distance * (i + 1);
-
-		Walls.push_back(newWalls);
-
-	}
-
+	spawnWalls();
 	Player const newPlayer;
 	player = newPlayer;
-
 	SpawnAliens();
-
 	Background newBackground;
 	newBackground.Initialize(600);
 	background = newBackground;
@@ -161,6 +146,21 @@ void Game::SpawnAliens()
 			std::cout << "Find Alien -X:" << newAlien.position.x << std::endl;
 			std::cout << "Find Alien -Y:" << newAlien.position.y << std::endl;
 		}
+	}
+}
+
+void Game::spawnWalls()
+{
+	const int window_width = GetScreenWidth();
+	const int window_height = GetScreenHeight();
+	const int wall_distance = window_width / (wallCount + 1);
+	for (int i = 0; i < wallCount; i++)
+	{
+		Wall newWalls;
+		newWalls.position.y = window_height - 250;
+		newWalls.position.x = wall_distance * (i + 1);
+
+		Walls.push_back(newWalls);
 	}
 }
 

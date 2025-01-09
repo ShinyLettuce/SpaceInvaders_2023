@@ -45,6 +45,7 @@ public:
 	void Update();
 	void Render();
 	void SpawnAliens();
+	void spawnWalls();
 	bool circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 lineTop, Vector2 lineBottom);
 
 	void createPlayerProjectile();
