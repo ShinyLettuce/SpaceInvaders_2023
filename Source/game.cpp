@@ -114,20 +114,18 @@ void Game::Render()
 
 	player.Render(shipTextures[player.activeTexture]);
 
-	for (Projectile& p : playerProjectiles)
+	for (const Projectile& p : playerProjectiles)
 	{
 		p.Render(laserTexture);
 	}
-	for (Projectile& p : enemyProjectiles)
+	for (const Projectile& p : enemyProjectiles)
 	{
 		p.Render(laserTexture);
 	}
-
 	for (Wall& w : Walls)
 	{
 		w.Render(barrierTexture);
 	}
-
 	for (const Alien& a : Aliens)
 	{
 		a.Render(alienTexture);
