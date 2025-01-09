@@ -16,10 +16,10 @@ void GameStateManager::gameplayState()
 	game.Update();
 	game.Render();
 
-	if (game.gameOver)
+	if (game.isGameOver())
 	{
 		stateStack.push(GameState::ENDSCREEN);
-		endScreen.finalScore = game.score;
+		endScreen.finalScore = game.getScore();
 		endScreen.newHighScore = endScreen.CheckNewHighScore();
 	}
 }

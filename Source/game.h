@@ -22,10 +22,23 @@ class Game
 	int formationY = 50;
 	int wallCount = 5;
 	float shootTimer = 0;
-	Rectangle rec = { 0, 0 ,0 ,0 }; 
-public:
+	Rectangle rec = { 0, 0 ,0 ,0 };
+
+	std::array<MyTexture2D, 3> shipTextures{ MyTexture2D{"./Assets/Ship1.png"}, MyTexture2D{"./Assets/Ship2.png"}, MyTexture2D{"./Assets/Ship3.png"} };
+	MyTexture2D alienTexture{ "./Assets/Alien.png" };
+	MyTexture2D barrierTexture{ "./Assets/Barrier.png" };
+	MyTexture2D laserTexture{ "./Assets/Laser.png" };
+
+	Player player;
+	std::vector<Projectile> playerProjectiles;
+	std::vector<Projectile> enemyProjectiles;
+	std::vector<Wall> Walls;
+	std::vector<Alien> Aliens;
+	Background background;
+
 	int score;
 	bool gameOver = false;
+public:
 
 	void Start();
 	void End();
@@ -39,16 +52,6 @@ public:
 	void removeDeadEntities();
 	void checkCollisions();
 
-	// Entity Storage and Resources
-	std::array<MyTexture2D, 3> shipTextures{ MyTexture2D{"./Assets/Ship1.png"}, MyTexture2D{"./Assets/Ship2.png"}, MyTexture2D{"./Assets/Ship3.png"} };
-	MyTexture2D alienTexture{ "./Assets/Alien.png" };
-	MyTexture2D barrierTexture{ "./Assets/Barrier.png" };
-	MyTexture2D laserTexture{ "./Assets/Laser.png" };
-
-	Player player;
-	std::vector<Projectile> playerProjectiles;
-	std::vector<Projectile> enemyProjectiles;
-	std::vector<Wall> Walls;
-	std::vector<Alien> Aliens;
-	Background background;
+	bool isGameOver() const noexcept { return gameOver; }
+	int getScore() const noexcept{ return score; }
 };
