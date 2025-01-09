@@ -38,20 +38,20 @@ class Game
 
 	int score;
 	bool gameOver = false;
-public:
 
-	void Start();
 	void End();
-	void Update();
-	void Render();
 	void SpawnAliens();
 	void spawnWalls();
 	bool circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 lineTop, Vector2 lineBottom);
-
 	void createPlayerProjectile();
 	void createEnemyProjectile();
 	void removeDeadEntities();
 	void checkCollisions();
+public:
+
+	void Start();
+	void Update();
+	void Render();
 
 	bool isGameOver() const noexcept { return gameOver; }
 	int getScore() const noexcept{ return score; }
