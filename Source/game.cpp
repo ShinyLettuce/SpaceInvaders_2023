@@ -247,12 +247,12 @@ void Game::createEnemyProjectile()
 
 	Vector2 projectilePosition = aliens[randomAlienIndex].position;
 	projectilePosition.y += 40;
-	const float projectileSpeed = -15;
+	constexpr float projectileSpeed = -15;
 	const Projectile newProjectile(projectilePosition, projectileSpeed);
 	enemyProjectiles.push_back(newProjectile);
 }
 
-bool Game::circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 lineStart, Vector2 lineEnd)
+bool Game::circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 lineStart, Vector2 lineEnd) const
 {
 	if (pointInCircle(circlePos, circleRadius, lineStart) || pointInCircle(circlePos, circleRadius, lineEnd))
 	{
@@ -265,7 +265,7 @@ bool Game::circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 li
 
 	const float length = lineLength(A, B);
 
-	const float dotP = (((C.x - A.x) * (B.x - A.x)) + ((C.y - A.y) * (B.y - A.y))) / pow(length, 2);
+	const float dotP = (((C.x - A.x) * (B.x - A.x)) + ((C.y - A.y) * (B.y - A.y))) / pow(length, 2.f);
 
 	const float closestX = A.x + (dotP * (B.x - A.x));
 	const float closestY = A.y + (dotP * (B.y - A.y));
@@ -280,15 +280,7 @@ bool Game::circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 li
 	if (closestLength == length + buffer || closestLength == length - buffer)
 	{
 		const float closeToCentre = lineLength(A, { closestX, closestY });
-
-		if (closeToCentre < circleRadius)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return (closeToCentre < circleRadius);
 	}
 	else
 	{

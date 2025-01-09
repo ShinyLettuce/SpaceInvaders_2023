@@ -42,7 +42,7 @@ class Game
 	void end();
 	void spawnAliens();
 	void spawnWalls();
-	bool circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 lineTop, Vector2 lineBottom);
+	bool circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 lineTop, Vector2 lineBottom) const;
 	void createPlayerProjectile();
 	void createEnemyProjectile();
 	void removeDeadEntities();
