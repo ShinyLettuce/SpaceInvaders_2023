@@ -17,120 +17,116 @@ void EndScreen::InsertNewHighScore(std::string name)
 	}
 }
 
-bool EndScreen::CheckNewHighScore()
+bool EndScreen::CheckNewHighScore() noexcept
 {
-	if (finalScore > Leaderboard[4].score)
+	return (finalScore > Leaderboard[4].score);
+}
+
+void EndScreen::drawLeaderboard() noexcept
+{
+	DrawText("LEADERBOARD", 50, 100, 40, YELLOW);
+
+	for (int i = 0; i < Leaderboard.size(); i++)
 	{
-		return true;
+		std::string tempNameDisplay = Leaderboard[i].name;
+		DrawText(tempNameDisplay.data(), 50, 140 + (i * 40), 40, YELLOW);
+		DrawText(TextFormat("%i", Leaderboard[i].score), 350, 140 + (i * 40), 40, YELLOW);
 	}
-	return false;
+}
+
+void EndScreen::drawTextBoxOutline() const noexcept
+{
+	if (mouseOnText)
+	{
+		DrawRectangleLinesEx(textBox, outlineWidth, RED);
+	}
+	else
+	{
+		DrawRectangleLinesEx(textBox, outlineWidth, DARKGRAY);
+	}
 }
 
 void EndScreen::update()
 {
-	if (newHighScore)
+	if (!newHighScore)
 	{
-		if (CheckCollisionPointRec(GetMousePosition(), textBox)) mouseOnText = true;
-		else mouseOnText = false;
+		return;
+	}
 
-		if (mouseOnText)
+	mouseOnText = CheckCollisionPointRec(GetMousePosition(), textBox);
+
+	if (mouseOnText)
+	{
+		SetMouseCursor(MOUSE_CURSOR_IBEAM);
+		int key = GetCharPressed();
+
+		while (key > 0)
 		{
-			SetMouseCursor(MOUSE_CURSOR_IBEAM);
-			int key = GetCharPressed();
-
-			while (key > 0)
+			if ((key >= 32) && (key <= 125) && (letterCount < maxLetterCount))
 			{
-				if ((key >= 32) && (key <= 125) && (letterCount < 9))
-				{
-					name[letterCount] = (char)key;
-					name[letterCount + 1] = '\0';
-					letterCount++;
-				}
-				key = GetCharPressed();
+				name[letterCount] = (char)key;
+				name[letterCount + 1] = '\0';
+				letterCount++;
 			}
-
-			if (IsKeyPressed(KEY_BACKSPACE))
-			{
-				letterCount--;
-				if (letterCount < 0) letterCount = 0;
-				name[letterCount] = '\0';
-			}
-			framesCounter++;
-		}
-		else
-		{
-			SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-			framesCounter = 0;
+			key = GetCharPressed();
 		}
 
-		if (letterCount > 0 && letterCount < 9 && IsKeyReleased(KEY_ENTER))
+		if (IsKeyPressed(KEY_BACKSPACE))
 		{
-			std::string nameEntry(name);
-			InsertNewHighScore(nameEntry);
-			newHighScore = false;
+			letterCount--;
+			if (letterCount < 0) letterCount = 0;
+			name[letterCount] = '\0';
 		}
+		framesCounter++;
+	}
+	else
+	{
+		SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+		framesCounter = 0;
+	}
+
+	if (letterCount > 0 && letterCount < maxLetterCount && IsKeyReleased(KEY_ENTER))
+	{
+		std::string nameEntry(name);
+		InsertNewHighScore(nameEntry);
+		newHighScore = false;
 	}
 }
 
-void EndScreen::render()
+void EndScreen::render() noexcept
 {
-	if (newHighScore)
+	if (!newHighScore)
 	{
-		DrawText("NEW HIGHSCORE!", 600, 300, 60, YELLOW);
-		DrawText("PLACE MOUSE OVER INPUT BOX!", 600, 400, 20, YELLOW);
+		DrawText("PRESS ENTER TO CONTINUE", 600, 200, 40, YELLOW);
+		drawLeaderboard();
+		return;
+	}
 
-		DrawRectangleRec(textBox, LIGHTGRAY);
+	DrawText("NEW HIGHSCORE!", 600, 300, 60, YELLOW);
+	DrawText("PLACE MOUSE OVER INPUT BOX!", 600, 400, 20, YELLOW);
+	DrawRectangleRec(textBox, LIGHTGRAY);
+	drawTextBoxOutline();
+	DrawText(name, static_cast<int>(textBox.x) + 5, static_cast<int>(textBox.y) + 8, 40, MAROON);
 
-		if (mouseOnText)
+	DrawText(TextFormat("INPUT CHARS: %i/%i", letterCount, 8), 600, 600, 20, YELLOW);
+
+	if (mouseOnText)
+	{
+		if (letterCount < maxLetterCount)
 		{
-			DrawRectangleLines((int)textBox.x, (int)textBox.y, (int)textBox.width, (int)textBox.height, RED);
+			if (((framesCounter / 20) % 2) == 0)
+			{
+				DrawText("_", static_cast<int>(textBox.x) + 8 + MeasureText(name, 40), static_cast<int>(textBox.y) + 12, 40, MAROON);
+			}
 		}
 		else
 		{
-			DrawRectangleLines((int)textBox.x, (int)textBox.y, (int)textBox.width, (int)textBox.height, DARKGRAY);
+			DrawText("Press BACKSPACE to delete chars...", 600, 650, 20, YELLOW);
 		}
-
-		//Draw the name being typed out
-		DrawText(name, (int)textBox.x + 5, (int)textBox.y + 8, 40, MAROON);
-
-		//Draw the text explaining how many characters are used
-		DrawText(TextFormat("INPUT CHARS: %i/%i", letterCount, 8), 600, 600, 20, YELLOW);
-
-		if (mouseOnText)
-		{
-			if (letterCount < 9)
-			{
-				// Draw blinking underscore char
-				if (((framesCounter / 20) % 2) == 0)
-				{
-					DrawText("_", (int)textBox.x + 8 + MeasureText(name, 40), (int)textBox.y + 12, 40, MAROON);
-				}
-			}
-			else
-			{
-				//Name needs to be shorter
-				DrawText("Press BACKSPACE to delete chars...", 600, 650, 20, YELLOW);
-			}
-		}
-
-		// Explain how to continue when name is input
-		if (letterCount > 0 && letterCount < 9)
-		{
-			DrawText("PRESS ENTER TO CONTINUE", 600, 800, 40, YELLOW);
-		}
-
 	}
-	else {
-		// If no highscore or name is entered, show scoreboard and call it a day
-		DrawText("PRESS ENTER TO CONTINUE", 600, 200, 40, YELLOW);
 
-		DrawText("LEADERBOARD", 50, 100, 40, YELLOW);
-
-		for (int i = 0; i < Leaderboard.size(); i++)
-		{
-			char* tempNameDisplay = Leaderboard[i].name.data();
-			DrawText(tempNameDisplay, 50, 140 + (i * 40), 40, YELLOW);
-			DrawText(TextFormat("%i", Leaderboard[i].score), 350, 140 + (i * 40), 40, YELLOW);
-		}
+	if (letterCount > 0 && letterCount < maxLetterCount)
+	{
+		DrawText("PRESS ENTER TO CONTINUE", 600, 800, 40, YELLOW);
 	}
 }
