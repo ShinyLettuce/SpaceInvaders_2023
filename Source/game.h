@@ -10,7 +10,6 @@
 #include <array>
 #include <string>
 #include <algorithm>
-#include <iostream>
 #include <chrono>
 
 class Game
@@ -37,7 +36,6 @@ class Game
 	std::vector<Wall> walls;
 	std::vector<Alien> aliens;
 	Background background;
-
 
 	void end() noexcept;
 	void spawnAliens();
