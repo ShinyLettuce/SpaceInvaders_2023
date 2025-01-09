@@ -51,9 +51,4 @@ public:
 	std::vector<Wall> Walls;
 	std::vector<Alien> Aliens;
 	Background background;
-
-	Vector2 playerPos = { 0, 0 };
-	Vector2 alienPos = { 0, 0 };
-	Vector2 cornerPos = { 0, 0 };
-	float offset;
 };

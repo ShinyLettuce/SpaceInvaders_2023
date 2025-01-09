@@ -88,11 +88,7 @@ void Game::Update() //TODO: split into several functions
 		SpawnAliens();
 	}
 
-	// Update background with offset
-	playerPos = { player.x_pos, player.player_base_height };
-	cornerPos = { 0, player.player_base_height };
-	offset = lineLength(playerPos, cornerPos) * -1;
-	background.Update(offset / 15);
+	background.Update(-player.x_pos / 15);
 
 	for (Projectile& p : playerProjectiles)
 	{

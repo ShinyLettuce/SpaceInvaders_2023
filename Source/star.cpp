@@ -20,7 +20,7 @@ void Background::Initialize(int starAmount)
 	}
 }
 
-void Background::Update(float offset)
+void Background::Update(float offset) noexcept
 {
 	for (Star& star : Stars)
 	{
