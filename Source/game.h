@@ -25,7 +25,10 @@ class Game
 	bool gameOver = false;
 	Rectangle rec = { 0, 0 ,0 ,0 };
 
-	std::array<MyTexture2D, 3> shipTextures{ MyTexture2D{"./Assets/Ship1.png"}, MyTexture2D{"./Assets/Ship2.png"}, MyTexture2D{"./Assets/Ship3.png"} };
+	std::array<MyTexture2D, 3> shipTextures{ 
+		MyTexture2D{"./Assets/Ship1.png"},
+		MyTexture2D{"./Assets/Ship2.png"},
+		MyTexture2D{"./Assets/Ship3.png"} };
 	MyTexture2D alienTexture{ "./Assets/Alien.png" };
 	MyTexture2D barrierTexture{ "./Assets/Barrier.png" };
 	MyTexture2D laserTexture{ "./Assets/Laser.png" };
