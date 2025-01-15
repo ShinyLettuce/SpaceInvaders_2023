@@ -38,7 +38,7 @@ void GameStateManager::endScreenState()
 	endScreen.render();
 }
 
-void GameStateManager::update()
+void GameStateManager::run()
 {
 	BeginDrawing();
 	ClearBackground(BLACK);

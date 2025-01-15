@@ -30,5 +30,5 @@ public:
 	void gameplayState();
 	void endScreenState();
 
-	void update();
+	void run();
 };

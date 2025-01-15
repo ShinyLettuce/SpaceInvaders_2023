@@ -12,7 +12,7 @@ int main(void)
 
     while (!WindowShouldClose())
     {
-        game.update();
+        game.run();
     }
     CloseWindow(); 
     return 0;
