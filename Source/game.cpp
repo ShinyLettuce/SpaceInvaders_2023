@@ -22,7 +22,7 @@ void Game::end() noexcept
 	gameOver = true;
 }
 
-void Game::checkForGameOver()
+void Game::checkForGameOver() noexcept
 {
 	if (IsKeyReleased(KEY_Q))
 	{
@@ -32,7 +32,7 @@ void Game::checkForGameOver()
 	{
 		end();
 	}
-	for (Alien& a : aliens)
+	for (const Alien& a : aliens)
 	{
 		if (a.position.y > static_cast<float>(GetScreenHeight()) - player.player_base_height)
 		{
@@ -113,8 +113,8 @@ void Game::spawnAliens()
 		for (int col = 0; col < formationWidth; col++) {
 			Alien newAlien;
 			newAlien.active = true;
-			newAlien.position.x = formationX + 450.f + (col * alienSpacing);
-			newAlien.position.y = formationY + (row * alienSpacing);
+			newAlien.position.x = formationX + 450.f + (static_cast<float>(col) * alienSpacing);
+			newAlien.position.y = formationY + (static_cast<float>(row) * alienSpacing);
 			aliens.push_back(newAlien);
 		}
 	}
@@ -128,9 +128,8 @@ void Game::spawnWalls()
 	for (int i = 0; i < wallCount; i++)
 	{
 		Wall newWalls;
-		newWalls.position.y = window_height - 250;
-		newWalls.position.x = wall_distance * (i + 1);
-
+		newWalls.position.y = static_cast<float>(window_height - 250);
+		newWalls.position.x = static_cast<float>(wall_distance * (i + 1));
 		walls.push_back(newWalls);
 	}
 }
@@ -207,7 +206,7 @@ void Game::createPlayerProjectile()
 	playerProjectiles.push_back(newProjectile);
 }
 
-void Game::createEnemyProjectile()
+void Game::createEnemyProjectile() noexcept
 {
 	int randomAlienIndex = 0;
 

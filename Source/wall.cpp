@@ -16,21 +16,15 @@ void Wall::Render(const MyTexture2D& texture) const noexcept
 			200,
 		}, { 100 , 100 },
 		0,
-		WHITE);
-
+		color);
 
 	DrawText(TextFormat("%i", health), static_cast<int>(position.x) - 21, static_cast<int>(position.y) + 10, 40, RED);
-
 }
 
 void Wall::Update() noexcept
 {
-
-	// set walls as inactive when out of health
 	if (health < 1)
 	{
 		active = false;
 	}
-
-
 }

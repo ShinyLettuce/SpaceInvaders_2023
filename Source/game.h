@@ -44,9 +44,9 @@ class Game
 	void spawnAliens();
 	void spawnWalls();
 	void createPlayerProjectile();
-	void createEnemyProjectile();
+	void createEnemyProjectile() noexcept;
 	void removeDeadEntities();
-	void checkForGameOver();
+	void checkForGameOver() noexcept;
 	void checkCollisions() noexcept;
 public:
 

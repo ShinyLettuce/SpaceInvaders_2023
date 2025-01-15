@@ -5,10 +5,10 @@
 struct Wall
 {
 public:
-	Vector2 position;
-	Rectangle rec;
-	bool active;
-	Color color;
+	Vector2 position = { 0,0 };
+	Rectangle rec = { 0,0,0,0 };
+	bool active = true;
+	Color color = WHITE;
 	int health = 50;
 	float radius = 60;
 
