@@ -1,6 +1,6 @@
 #include "endscreen.h"
 
-void EndScreen::InsertNewHighScore(std::string name)
+void EndScreen::InsertNewHighScore(const std::string& name)
 {
 	PlayerData newData;
 	newData.name = name;
@@ -46,43 +46,43 @@ void EndScreen::drawTextBoxOutline() const noexcept
 	}
 }
 
+void EndScreen::updateTextBox() noexcept
+{
+	if (!mouseOnText)
+	{
+		SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+		framesCounter = 0;
+		return;
+	}
+
+	SetMouseCursor(MOUSE_CURSOR_IBEAM);
+	int key = GetCharPressed();
+
+	while (key > 0)
+	{
+		if ((key >= 32) && (key <= 125) && (letterCount < maxLetterCount))
+		{
+			name[letterCount] = (char)key;
+			name[letterCount + 1] = '\0';
+			letterCount++;
+		}
+		key = GetCharPressed();
+	}
+
+	if (IsKeyPressed(KEY_BACKSPACE))
+	{
+		letterCount--;
+		if (letterCount < 0) letterCount = 0;
+		name[letterCount] = '\0';
+	}
+	framesCounter++;
+}
+
 void EndScreen::update()
 {
 	if (!newHighScore)
 	{
 		return;
-	}
-
-	mouseOnText = CheckCollisionPointRec(GetMousePosition(), textBox);
-
-	if (mouseOnText)
-	{
-		SetMouseCursor(MOUSE_CURSOR_IBEAM);
-		int key = GetCharPressed();
-
-		while (key > 0)
-		{
-			if ((key >= 32) && (key <= 125) && (letterCount < maxLetterCount))
-			{
-				name[letterCount] = (char)key;
-				name[letterCount + 1] = '\0';
-				letterCount++;
-			}
-			key = GetCharPressed();
-		}
-
-		if (IsKeyPressed(KEY_BACKSPACE))
-		{
-			letterCount--;
-			if (letterCount < 0) letterCount = 0;
-			name[letterCount] = '\0';
-		}
-		framesCounter++;
-	}
-	else
-	{
-		SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-		framesCounter = 0;
 	}
 
 	if (letterCount > 0 && letterCount < maxLetterCount && IsKeyReleased(KEY_ENTER))
@@ -91,6 +91,9 @@ void EndScreen::update()
 		InsertNewHighScore(nameEntry);
 		newHighScore = false;
 	}
+
+	mouseOnText = CheckCollisionPointRec(GetMousePosition(), textBox);
+	updateTextBox();
 }
 
 void EndScreen::render() noexcept
