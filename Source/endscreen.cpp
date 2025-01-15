@@ -1,9 +1,9 @@
 #include "endscreen.h"
 
-void EndScreen::InsertNewHighScore(const std::string& name)
+void EndScreen::InsertNewHighScore(std::string_view newName)
 {
 	PlayerData newData;
-	newData.name = name;
+	newData.name = newName.data();
 	newData.score = finalScore;
 
 	for (int i = 0; i < Leaderboard.size(); i++)
@@ -22,28 +22,37 @@ bool EndScreen::CheckNewHighScore() noexcept
 	return (finalScore > Leaderboard[4].score);
 }
 
-void EndScreen::drawLeaderboard() noexcept
+void EndScreen::update()
 {
-	DrawText("LEADERBOARD", 50, 100, 40, YELLOW);
-
-	for (int i = 0; i < Leaderboard.size(); i++)
+	if (!isNewHighScore)
 	{
-		std::string tempNameDisplay = Leaderboard[i].name;
-		DrawText(tempNameDisplay.data(), 50, 140 + (i * 40), 40, YELLOW);
-		DrawText(TextFormat("%i", Leaderboard[i].score), 350, 140 + (i * 40), 40, YELLOW);
+		return;
 	}
+
+	if (letterCount > 0 && letterCount < maxLetterCount && IsKeyReleased(KEY_ENTER))
+	{
+		const std::string_view nameEntry(name);
+		InsertNewHighScore(nameEntry);
+		isNewHighScore = false;
+	}
+
+	mouseOnText = CheckCollisionPointRec(GetMousePosition(), textBox);
+	updateTextBox();
 }
 
-void EndScreen::drawTextBoxOutline() const noexcept
+void EndScreen::render() noexcept
 {
-	if (mouseOnText)
+	if (!isNewHighScore)
 	{
-		DrawRectangleLinesEx(textBox, outlineWidth, RED);
+		DrawText("PRESS ENTER TO CONTINUE", 600, 200, 40, YELLOW);
+		drawLeaderboard();
+		return;
 	}
-	else
-	{
-		DrawRectangleLinesEx(textBox, outlineWidth, DARKGRAY);
-	}
+
+	DrawText("NEW HIGHSCORE!", 600, 300, 60, YELLOW);
+	DrawText("PLACE MOUSE OVER INPUT BOX!", 600, 400, 20, YELLOW);
+
+	drawTextBox();
 }
 
 void EndScreen::updateTextBox() noexcept
@@ -56,80 +65,79 @@ void EndScreen::updateTextBox() noexcept
 	}
 
 	SetMouseCursor(MOUSE_CURSOR_IBEAM);
-	int key = GetCharPressed();
-
-	while (key > 0)
-	{
-		if ((key >= 32) && (key <= 125) && (letterCount < maxLetterCount))
-		{
-			name[letterCount] = (char)key;
-			name[letterCount + 1] = '\0';
-			letterCount++;
-		}
-		key = GetCharPressed();
-	}
+	addInputCharacter();
 
 	if (IsKeyPressed(KEY_BACKSPACE))
 	{
-		letterCount--;
-		if (letterCount < 0) letterCount = 0;
-		name[letterCount] = '\0';
+		deleteCharacter();
 	}
 	framesCounter++;
 }
 
-void EndScreen::update()
+void EndScreen::addInputCharacter() noexcept
 {
-	if (!newHighScore)
+	int key = GetCharPressed();
+	while (key > 0)
 	{
-		return;
+		if ((key >= 32) && (key <= 125) && (letterCount < maxLetterCount))
+		{
+			name[letterCount] = static_cast<char>(key);
+			letterCount++;
+		}
+		key = GetCharPressed();
 	}
-
-	if (letterCount > 0 && letterCount < maxLetterCount && IsKeyReleased(KEY_ENTER))
-	{
-		std::string nameEntry(name);
-		InsertNewHighScore(nameEntry);
-		newHighScore = false;
-	}
-
-	mouseOnText = CheckCollisionPointRec(GetMousePosition(), textBox);
-	updateTextBox();
 }
 
-void EndScreen::render() noexcept
+void EndScreen::deleteCharacter() noexcept
 {
-	if (!newHighScore)
+	letterCount--;
+	if (letterCount < 0)
 	{
-		DrawText("PRESS ENTER TO CONTINUE", 600, 200, 40, YELLOW);
-		drawLeaderboard();
-		return;
+		letterCount = 0;
 	}
+	name[letterCount] = '\0';
+}
 
-	DrawText("NEW HIGHSCORE!", 600, 300, 60, YELLOW);
-	DrawText("PLACE MOUSE OVER INPUT BOX!", 600, 400, 20, YELLOW);
+void EndScreen::drawLeaderboard() noexcept
+{
+	DrawText("LEADERBOARD", 50, 100, 40, YELLOW);
+
+	for (int i = 0; i < Leaderboard.size(); i++)
+	{
+		std::string tempNameDisplay = Leaderboard[i].name;
+		DrawText(tempNameDisplay.data(), 50, 140 + (i * 40), 40, YELLOW);
+		DrawText(TextFormat("%i", Leaderboard[i].score), 350, 140 + (i * 40), 40, YELLOW);
+	}
+}
+
+void EndScreen::drawTextBox() const noexcept
+{
 	DrawRectangleRec(textBox, LIGHTGRAY);
-	drawTextBoxOutline();
-	DrawText(name, static_cast<int>(textBox.x) + 5, static_cast<int>(textBox.y) + 8, 40, MAROON);
-
 	DrawText(TextFormat("INPUT CHARS: %i/%i", letterCount, 8), 600, 600, 20, YELLOW);
-
-	if (mouseOnText)
-	{
-		if (letterCount < maxLetterCount)
-		{
-			if (((framesCounter / 20) % 2) == 0)
-			{
-				DrawText("_", static_cast<int>(textBox.x) + 8 + MeasureText(name, 40), static_cast<int>(textBox.y) + 12, 40, MAROON);
-			}
-		}
-		else
-		{
-			DrawText("Press BACKSPACE to delete chars...", 600, 650, 20, YELLOW);
-		}
-	}
+	DrawText(name.data(), static_cast<int>(textBox.x) + 5, static_cast<int>(textBox.y) + 8, 40, MAROON);
 
 	if (letterCount > 0 && letterCount < maxLetterCount)
 	{
 		DrawText("PRESS ENTER TO CONTINUE", 600, 800, 40, YELLOW);
+	}
+
+	if (!mouseOnText)
+	{
+		DrawRectangleLinesEx(textBox, outlineWidth, DARKGRAY);
+		return;
+	}
+
+	DrawRectangleLinesEx(textBox, outlineWidth, RED);
+
+	if (letterCount < maxLetterCount)
+	{
+		if (((framesCounter / 20) % 2) == 0)
+		{
+			DrawText("_", static_cast<int>(textBox.x) + 8 + MeasureText(name.data(), 40), static_cast<int>(textBox.y) + 12, 40, MAROON);
+		}
+	}
+	else
+	{
+		DrawText("Press BACKSPACE to delete chars...", 600, 650, 20, YELLOW);
 	}
 }

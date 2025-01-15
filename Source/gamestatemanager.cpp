@@ -19,14 +19,14 @@ void GameStateManager::gameplayState()
 	if (game.isGameOver())
 	{
 		stateStack.push(GameState::ENDSCREEN);
-		endScreen.finalScore = game.getScore();
-		endScreen.newHighScore = endScreen.CheckNewHighScore();
+		endScreen.setFinalScore(game.getScore());
+		endScreen.setIsNewHighScore(endScreen.CheckNewHighScore());
 	}
 }
 
 void GameStateManager::endScreenState()
 {
-	if (IsKeyReleased(KEY_ENTER) && !endScreen.newHighScore)
+	if (IsKeyReleased(KEY_ENTER) && !endScreen.getIsNewHighScore())
 	{
 		while (stateStack.top() != GameState::STARTSCREEN)
 		{
