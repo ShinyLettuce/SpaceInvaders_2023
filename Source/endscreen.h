@@ -12,11 +12,11 @@ struct PlayerData
 
 class EndScreen
 {
-	std::array<char,10> name;
+	std::array<char,9> name;
 	int finalScore = 0;
 	int letterCount = 0;
 	int framesCounter = 0;
-	int maxLetterCount = 9;
+	int maxLetterCount = 8;
 	bool mouseOnText = false;
 	bool isNewHighScore = false;
 	Rectangle textBox = { 600, 500, 225, 50 };

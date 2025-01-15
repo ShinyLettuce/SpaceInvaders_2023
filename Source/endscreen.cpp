@@ -113,10 +113,10 @@ void EndScreen::drawLeaderboard() noexcept
 void EndScreen::drawTextBox() const noexcept
 {
 	DrawRectangleRec(textBox, LIGHTGRAY);
-	DrawText(TextFormat("INPUT CHARS: %i/%i", letterCount, 8), 600, 600, 20, YELLOW);
+	DrawText(TextFormat("INPUT CHARS: %i/%i", letterCount, maxLetterCount), 600, 600, 20, YELLOW);
 	DrawText(name.data(), static_cast<int>(textBox.x) + 5, static_cast<int>(textBox.y) + 8, 40, MAROON);
 
-	if (letterCount > 0 && letterCount < maxLetterCount)
+	if (letterCount > 0 && letterCount <= maxLetterCount)
 	{
 		DrawText("PRESS ENTER TO CONTINUE", 600, 800, 40, YELLOW);
 	}
