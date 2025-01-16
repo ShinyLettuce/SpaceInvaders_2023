@@ -2,7 +2,6 @@
 
 void Player::Update() noexcept
 {
-	//Movement
 	direction = 0;
 	if (IsKeyDown(KEY_LEFT))
 	{
@@ -24,7 +23,6 @@ void Player::Update() noexcept
 		x_pos = static_cast<float>(GetScreenWidth()) - radius;
 	}
 
-	//Determine frame for animation
 	timer += GetFrameTime();
 
 	if (timer > 0.4 && activeTexture == 2)
