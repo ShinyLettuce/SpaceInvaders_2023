@@ -14,6 +14,7 @@
 #include <array>
 #include <string>
 #include <algorithm>
+#include <random>
 #include "mathutils.h"
 
 class Game
@@ -48,7 +49,7 @@ class Game
 	void spawnAliens();
 	void spawnWalls();
 	void createPlayerProjectile();
-	void createEnemyProjectile() noexcept;
+	void createEnemyProjectile();
 	void removeDeadEntities();
 	void checkForGameOver() noexcept;
 	void checkCollisions() noexcept;

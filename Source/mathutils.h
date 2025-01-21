@@ -8,7 +8,7 @@
 
 static float lineLength(Vector2 A, Vector2 B) noexcept
 {
-	const float length = sqrtf(pow(B.x - A.x, 2.f) + pow(B.y - A.y, 2.f));
+	const float length = sqrtf(powf(B.x - A.x, 2.f) + powf(B.y - A.y, 2.f));
 	return length;
 }
 
@@ -31,7 +31,7 @@ static bool circleLineCollision(Vector2 circlePos, float circleRadius, Vector2 l
 
 	const float length = lineLength(A, B);
 
-	const float dotP = (((C.x - A.x) * (B.x - A.x)) + ((C.y - A.y) * (B.y - A.y))) / pow(length, 2.f);
+	const float dotP = (((C.x - A.x) * (B.x - A.x)) + ((C.y - A.y) * (B.y - A.y))) / powf(length, 2.f);
 
 	const float closestX = A.x + (dotP * (B.x - A.x));
 	const float closestY = A.y + (dotP * (B.y - A.y));

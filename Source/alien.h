@@ -17,7 +17,7 @@ public:
 	bool active = true;
 	bool moveRight = true;
 
-	Alien(Vector2 _pos)
+	explicit Alien(Vector2 _pos) noexcept
 		: position{ _pos }
 	{}
 

@@ -16,7 +16,7 @@ public:
 	int health = 50;
 	float radius = 60;
 
-	Wall(Vector2 _pos) :
+	explicit Wall(Vector2 _pos) noexcept :
 		position{ _pos }
 	{
 

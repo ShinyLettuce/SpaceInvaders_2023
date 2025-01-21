@@ -86,7 +86,6 @@ void Game::render()
 
 	DrawText(TextFormat("Score: %i", score), 50, 20, 40, YELLOW);
 	DrawText(TextFormat("Lives: %i", player.lives), 50, 70, 40, YELLOW);
-
 	player.Render(shipTextures[player.activeTexture]);
 
 	enemyProjectile.Render(laserTexture);
@@ -200,13 +199,16 @@ void Game::createPlayerProjectile()
 	playerProjectiles.push_back(newProjectile);
 }
 
-void Game::createEnemyProjectile() noexcept
+void Game::createEnemyProjectile()
 {
 	int randomAlienIndex = 0;
 
+	std::default_random_engine generator;
+	std::uniform_int_distribution<int> distribution(0, INT16_MAX);
+
 	if (aliens.size() > 1)
 	{
-		randomAlienIndex = rand() % aliens.size();
+		randomAlienIndex = distribution(generator) % aliens.size();
 	}
 
 	Vector2 projectilePosition = aliens[randomAlienIndex].position;

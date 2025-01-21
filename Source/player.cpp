@@ -25,14 +25,10 @@ void Player::Update() noexcept
 
 	timer += GetFrameTime();
 
-	if (timer > 0.4 && activeTexture == 2)
-	{
-		activeTexture = 0;
-		timer = 0;
-	}
-	else if (timer > 0.4)
+	if (timer > 0.4)
 	{
 		activeTexture++;
+		activeTexture = activeTexture % 3;
 		timer = 0;
 	}
 }

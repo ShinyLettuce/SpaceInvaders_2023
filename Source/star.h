@@ -28,7 +28,7 @@ struct Background
 {
 	std::vector<Star> Stars;
 
-	Background(int starAmount)
+	explicit Background(int starAmount)
 	{
 		for (int i = 0; i < starAmount; i++)
 		{
