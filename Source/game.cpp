@@ -127,9 +127,8 @@ void Game::spawnWalls()
 	const int wall_distance = window_width / (wallCount + 1);
 	for (int i = 0; i < wallCount; i++)
 	{
-		Wall newWalls;
-		newWalls.position.y = static_cast<float>(window_height - 250);
-		newWalls.position.x = static_cast<float>(wall_distance * (i + 1));
+		const Vector2 wallPos{ static_cast<float>(wall_distance * (i + 1)) , static_cast<float>(window_height - 250) };
+		const Wall newWalls(wallPos);
 		walls.push_back(newWalls);
 	}
 }

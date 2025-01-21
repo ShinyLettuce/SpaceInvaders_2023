@@ -12,6 +12,11 @@ public:
 	int health = 50;
 	float radius = 60;
 
+	Wall(Vector2 _pos) :
+		position{ _pos }
+	{
+
+	}
 
 	void Render(const MyTexture2D& texture) const noexcept;
 	void Update() noexcept;
