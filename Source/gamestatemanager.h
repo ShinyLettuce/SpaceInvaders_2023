@@ -7,7 +7,6 @@
 
 class GameStateManager
 {
-public:
 	enum struct GameState
 	{
 		STARTSCREEN,
@@ -15,20 +14,20 @@ public:
 		ENDSCREEN
 	};
 
-
 	Game game;
 	StartScreen startScreen;
 	EndScreen endScreen;
 	std::stack<GameState> stateStack;
 
+	void startScreenState();
+	void gameplayState();
+	void endScreenState();
+public:
+
 	GameStateManager()
 	{
 		stateStack.push(GameState::STARTSCREEN);
 	}
-
-	void startScreenState();
-	void gameplayState();
-	void endScreenState();
 
 	void run();
 };
