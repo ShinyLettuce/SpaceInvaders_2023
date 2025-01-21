@@ -7,6 +7,8 @@
 #pragma warning(disable:ALL_CODE_ANALYSIS_WARNINGS)
 #include "raylib.h"
 #pragma warning(pop)
+#pragma warning(push)
+#pragma warning(disable: 26446) //gsl::at() warning
 
 struct PlayerData
 {

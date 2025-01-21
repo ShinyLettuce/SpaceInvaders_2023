@@ -16,6 +16,8 @@
 #include <algorithm>
 #include <random>
 #include "mathutils.h"
+#pragma warning(push)
+#pragma warning(disable: 26446) //gsl::at() warning 
 
 class Game
 {

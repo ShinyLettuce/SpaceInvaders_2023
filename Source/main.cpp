@@ -6,9 +6,6 @@
 #pragma warning(pop)
 #include "gamestatemanager.h"
 
-#pragma warning(push)
-#pragma warning(disable: 26446)
-
 int main(void)
 {    
     constexpr int screenWidth = 1920;
