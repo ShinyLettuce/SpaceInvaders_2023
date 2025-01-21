@@ -13,6 +13,10 @@ public:
 	bool active = true;
 	bool moveRight = true;
 
+	Alien(Vector2 _pos)
+		: position{ _pos }
+	{}
+
 	void Update() noexcept;
 	void Render(const MyTexture2D& texture) const noexcept;
 };

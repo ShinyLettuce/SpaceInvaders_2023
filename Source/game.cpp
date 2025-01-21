@@ -111,10 +111,8 @@ void Game::spawnAliens()
 {
 	for (int row = 0; row < formationHeight; row++) {
 		for (int col = 0; col < formationWidth; col++) {
-			Alien newAlien;
-			newAlien.active = true;
-			newAlien.position.x = formationX + 450.f + (static_cast<float>(col) * alienSpacing);
-			newAlien.position.y = formationY + (static_cast<float>(row) * alienSpacing);
+			const Vector2 alienPos{ formationX + 450.f + (static_cast<float>(col) * alienSpacing) , formationY + (static_cast<float>(row) * alienSpacing) };
+			const Alien newAlien(alienPos);
 			aliens.push_back(newAlien);
 		}
 	}
