@@ -19,7 +19,6 @@ public:
 	explicit Wall(Vector2 _pos) noexcept :
 		position{ _pos }
 	{
-
 	}
 
 	void Render(const MyTexture2D& texture) const noexcept;

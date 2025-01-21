@@ -15,7 +15,7 @@ void Projectile::Update() noexcept
 	}
 }
 
-void Projectile::Render(const MyTexture2D& texture) const
+void Projectile::Render(const MyTexture2D& texture) const noexcept
 {
 	DrawTexturePro(texture.get(),
 		{

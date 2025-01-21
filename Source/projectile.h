@@ -21,5 +21,5 @@ public:
 	{}
 
 	void Update() noexcept;
-	void Render(const MyTexture2D& texture) const;
+	void Render(const MyTexture2D& texture) const noexcept;
 };
