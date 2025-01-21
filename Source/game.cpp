@@ -8,9 +8,6 @@ void Game::start()
 	player = newPlayer;
 	spawnWalls();
 	spawnAliens();
-	Background newBackground;
-	newBackground.Initialize(600);
-	background = newBackground;
 }
 
 void Game::end() noexcept

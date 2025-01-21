@@ -33,12 +33,12 @@ class Game
 	MyTexture2D barrierTexture{ "./Assets/Barrier.png" };
 	MyTexture2D laserTexture{ "./Assets/Laser.png" };
 
-	Player player;
+	Background background = Background{ 600 };
 	Projectile enemyProjectile{ Vector2{ -99.f, -99.f}, 0 };
 	std::vector<Projectile> playerProjectiles;
-	std::vector<Wall> walls;
 	std::vector<Alien> aliens;
-	Background background;
+	std::vector<Wall> walls;
+	Player player;
 
 	void end() noexcept;
 	void spawnAliens();

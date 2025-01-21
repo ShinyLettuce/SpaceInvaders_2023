@@ -24,8 +24,15 @@ struct Background
 {
 	std::vector<Star> Stars;
 
-	void Initialize(int starAmount);
+	Background(int starAmount)
+	{
+		for (int i = 0; i < starAmount; i++)
+		{
+			const Star newStar;
+			Stars.push_back(newStar);
+		}
+	}
+
 	void Update(float offset) noexcept;
 	void Render() const noexcept;
-
 };
