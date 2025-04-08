@@ -28,19 +28,5 @@ void Alien::Update() noexcept
 
 void Alien::Render(const MyTexture2D& texture) const noexcept
 {
-	DrawTexturePro(texture.get(),
-		{
-			0,
-			0,
-			352,
-			352,
-		},
-		{
-			position.x,
-			position.y,
-			100,
-			100,
-		}, { 50 , 50 },
-		0,
-		color);
+	DrawTexture(texture.get(), position.x - texture.getWidth()/2, position.y - texture.getHeight()/2, color);
 }
