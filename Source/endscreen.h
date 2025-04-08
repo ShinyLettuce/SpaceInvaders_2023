@@ -30,7 +30,6 @@ class EndScreen
 
 	void InsertNewHighScore(std::string_view newName);
 	void addInputCharacter() noexcept;
-	void deleteCharacter() noexcept;
 	void drawLeaderboard() noexcept;
 	void updateTextBox() noexcept;
 	void drawTextBox() const noexcept;
