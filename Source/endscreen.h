@@ -1,12 +1,12 @@
 #pragma once
 #include <CodeAnalysis/Warnings.h>
-#include <string>
-#include <vector>
-#include <array>
 #pragma warning(push)
 #pragma warning(disable:ALL_CODE_ANALYSIS_WARNINGS)
 #include "raylib.h"
 #pragma warning(pop)
+#include <string>
+#include <vector>
+#include <array>
 #pragma warning(push)
 #pragma warning(disable: 26446) //gsl::at() warning
 
@@ -20,13 +20,12 @@ class EndScreen
 {
 	std::string name;
 	int finalScore = 0;
-	int letterCount = 0;
 	int framesCounter = 0;
 	int maxLetterCount = 8;
 	bool mouseOnText = false;
 	bool isNewHighScore = false;
-	Rectangle textBox = { 600, 500, 225, 50 };
 	float outlineWidth = 1.f;
+	Rectangle textBox = { 600, 500, 225, 50 };
 	std::vector<PlayerData> Leaderboard = { {"Player 1", 500}, {"Player 2", 400}, {"Player 3", 300}, {"Player 4", 200}, {"Player 5", 100} };
 
 	void InsertNewHighScore(std::string_view newName);

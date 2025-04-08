@@ -69,28 +69,22 @@ void EndScreen::updateTextBox() noexcept
 
 	if (IsKeyPressed(KEY_BACKSPACE))
 	{
-		deleteCharacter();
+		name.pop_back();
 	}
 	framesCounter++;
 }
 
 void EndScreen::addInputCharacter() noexcept
 {
-	int key = GetCharPressed();
+	char key = GetCharPressed();
 	while (key > 0)
 	{
 		if ((key >= 32) && (key <= 125) && (name.length() < maxLetterCount))
 		{
-			const char keyPressed = static_cast<char>(key);
-			name.append(1, keyPressed);
+			name.append(1, key);
 		}
 		key = GetCharPressed();
 	}
-}
-
-void EndScreen::deleteCharacter() noexcept
-{
-	name.pop_back();
 }
 
 void EndScreen::drawLeaderboard() noexcept
