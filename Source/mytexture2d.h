@@ -42,4 +42,7 @@ public:
 	const Texture2D& get() const noexcept {
 		return _tex;
 	}
+
+	int const getWidth() const noexcept { return _tex.width; }
+	int const getHeight() const noexcept { return _tex.height; }
 };
