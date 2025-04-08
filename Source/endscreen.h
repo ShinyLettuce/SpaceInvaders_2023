@@ -18,7 +18,7 @@ struct PlayerData
 
 class EndScreen
 {
-	std::array<char,9> name;
+	std::string name;
 	int finalScore = 0;
 	int letterCount = 0;
 	int framesCounter = 0;

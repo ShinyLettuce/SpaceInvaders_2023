@@ -29,7 +29,7 @@ void EndScreen::update()
 		return;
 	}
 
-	if (letterCount > 0 && letterCount < maxLetterCount && IsKeyReleased(KEY_ENTER))
+	if (name.length() > 0 && name.length() < maxLetterCount && IsKeyReleased(KEY_ENTER))
 	{
 		const std::string_view nameEntry(name);
 		InsertNewHighScore(nameEntry);
@@ -79,10 +79,10 @@ void EndScreen::addInputCharacter() noexcept
 	int key = GetCharPressed();
 	while (key > 0)
 	{
-		if ((key >= 32) && (key <= 125) && (letterCount < maxLetterCount))
+		if ((key >= 32) && (key <= 125) && (name.length() < maxLetterCount))
 		{
-			name[letterCount] = static_cast<char>(key);
-			letterCount++;
+			const char keyPressed = static_cast<char>(key);
+			name.append(1, keyPressed);
 		}
 		key = GetCharPressed();
 	}
@@ -90,12 +90,7 @@ void EndScreen::addInputCharacter() noexcept
 
 void EndScreen::deleteCharacter() noexcept
 {
-	letterCount--;
-	if (letterCount < 0)
-	{
-		letterCount = 0;
-	}
-	name[letterCount] = '\0';
+	name.pop_back();
 }
 
 void EndScreen::drawLeaderboard() noexcept
@@ -113,10 +108,10 @@ void EndScreen::drawLeaderboard() noexcept
 void EndScreen::drawTextBox() const noexcept
 {
 	DrawRectangleRec(textBox, LIGHTGRAY);
-	DrawText(TextFormat("INPUT CHARS: %i/%i", letterCount, maxLetterCount), 600, 600, 20, YELLOW);
+	DrawText(TextFormat("INPUT CHARS: %i/%i", name.length(), maxLetterCount), 600, 600, 20, YELLOW);
 	DrawText(name.data(), static_cast<int>(textBox.x) + 5, static_cast<int>(textBox.y) + 8, 40, MAROON);
 
-	if (letterCount > 0 && letterCount <= maxLetterCount)
+	if (name.length() > 0 && name.length() <= maxLetterCount)
 	{
 		DrawText("PRESS ENTER TO CONTINUE", 600, 800, 40, YELLOW);
 	}
@@ -129,7 +124,7 @@ void EndScreen::drawTextBox() const noexcept
 
 	DrawRectangleLinesEx(textBox, outlineWidth, RED);
 
-	if (letterCount < maxLetterCount)
+	if (name.length() < maxLetterCount)
 	{
 		if (((framesCounter / 20) % 2) == 0)
 		{
