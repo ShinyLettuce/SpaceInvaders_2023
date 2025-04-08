@@ -37,5 +37,7 @@ void Player::Render(const MyTexture2D& texture) const noexcept
 {
 	const auto window_height = static_cast<float>(GetScreenHeight());
 
-	DrawTexture(texture.get(), x_pos - texture.getWidth()/2, window_height - player_base_height - texture.getHeight()/2, WHITE);
+	const int drawPosX = static_cast<int>(x_pos) - texture.getWidth() / 2;
+	const int drawPosY = static_cast<int>(window_height - player_base_height) - texture.getHeight() / 2;
+	DrawTexture(texture.get(), drawPosX, drawPosY, WHITE);
 }
