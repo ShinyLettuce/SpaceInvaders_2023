@@ -17,19 +17,5 @@ void Projectile::Update() noexcept
 
 void Projectile::Render(const MyTexture2D& texture) const noexcept
 {
-	DrawTexturePro(texture.get(),
-		{
-			0,
-			0,
-			176,
-			176,
-		},
-		{
-			position.x,
-			position.y,
-			50,
-			50,
-		}, { 25 , 25 },
-		0,
-		WHITE);
+	DrawTexture(texture.get(), position.x - texture.getWidth()/2, position.y - texture.getHeight()/2, WHITE);
 }
