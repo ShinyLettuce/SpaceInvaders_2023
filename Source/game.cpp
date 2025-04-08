@@ -80,7 +80,7 @@ void Game::update()
 	removeDeadEntities();
 }
 
-void Game::render()
+void Game::render() noexcept
 {
 	background.Render();
 

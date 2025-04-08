@@ -18,7 +18,6 @@
 #include "mathutils.h"
 #pragma warning(push)
 #pragma warning(disable: 26446) //gsl::at() warning
-#pragma warning(pop)
 
 class Game
 {
@@ -60,7 +59,7 @@ public:
 
 	void start();
 	void update();
-	void render();
+	void render() noexcept;
 
 	bool isGameOver() const noexcept { return gameOver; }
 	int getScore() const noexcept{ return score; }
