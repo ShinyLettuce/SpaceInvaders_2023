@@ -22,9 +22,9 @@
 class Game
 {
 	int shootTimer = 0;
-	float alienSpacing = 80;
-	float formationX = 100;
-	float formationY = 50;
+	int alienSpacing = 80;
+	int formationX = 100;
+	int formationY = 50;
 	int formationWidth = 8;
 	int formationHeight = 5;
 	int wallCount = 5;
@@ -41,7 +41,7 @@ class Game
 	MyTexture2D laserTexture{ "./Assets/Laser.png" };
 
 	Background background = Background{ 600 };
-	Projectile enemyProjectile{ Vector2{ -99.f, -99.f}, 0 };
+	Projectile enemyProjectile{ Vector2i{ -99, -99}, 0 };
 	std::vector<Projectile> playerProjectiles;
 	std::vector<Alien> aliens;
 	std::vector<Wall> walls;

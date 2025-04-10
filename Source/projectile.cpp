@@ -3,11 +3,6 @@
 void Projectile::Update() noexcept
 {
 	position.y -= speed;
-	lineStart.y = position.y - 15;
-	lineEnd.y = position.y + 15;
-
-	lineStart.x = position.x;
-	lineEnd.x = position.x;
 
 	if (position.y < 0 || position.y > 1500)
 	{
@@ -17,7 +12,7 @@ void Projectile::Update() noexcept
 
 void Projectile::Render(const MyTexture2D& texture) const noexcept
 {
-	const int drawPosX = static_cast<int>(position.x) - texture.getWidth() / 2;
-	const int drawPosY = static_cast<int>(position.y) - texture.getHeight() / 2;
+	const int drawPosX = position.x - texture.getWidth() / 2;
+	const int drawPosY = position.y - texture.getHeight() / 2;
 	DrawTexture(texture.get(), drawPosX, drawPosY, WHITE);
 }

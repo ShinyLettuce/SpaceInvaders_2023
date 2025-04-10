@@ -5,17 +5,17 @@
 #include "raylib.h"
 #pragma warning(pop)
 #include "mytexture2d.h"
+#include "mathutils.h"
 
 struct Projectile
 {
 public:
-	float speed = 15;
+	int speed = 15;
 	bool active = true;
-	Vector2 position = { 0,0 };
-	Vector2 lineStart = { 0, 0 };
-	Vector2 lineEnd = { 0, 0 };
+	Vector2i position = { 0,0 };
+	Box boundingBox = { 6, 42 };
 
-	Projectile(Vector2 _position, float _speed) noexcept : 
+	Projectile(Vector2i _position, int _speed) noexcept : 
 		speed{_speed},
 		position{ _position }
 	{}

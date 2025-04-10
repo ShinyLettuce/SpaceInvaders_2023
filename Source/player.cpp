@@ -12,15 +12,15 @@ void Player::Update() noexcept
 		direction++;
 	}
 
-	x_pos += speed * direction;
+	x_pos += static_cast<int>(speed * direction);
 
-	if (x_pos < 0 + radius)
+	if (x_pos < 0 + boundingBox.width / 2)
 	{
-		x_pos = 0 + radius;
+		x_pos = 0 + boundingBox.width / 2;
 	}
-	else if (x_pos > static_cast<float>(GetScreenWidth()) - radius)
+	else if (x_pos > GetScreenWidth() - boundingBox.width / 2)
 	{
-		x_pos = static_cast<float>(GetScreenWidth()) - radius;
+		x_pos = GetScreenWidth() - boundingBox.width / 2;
 	}
 
 	timer += GetFrameTime();
@@ -35,9 +35,9 @@ void Player::Update() noexcept
 
 void Player::Render(const MyTexture2D& texture) const noexcept
 {
-	const auto window_height = static_cast<float>(GetScreenHeight());
+	const auto window_height = GetScreenHeight();
 
-	const int drawPosX = static_cast<int>(x_pos) - texture.getWidth() / 2;
-	const int drawPosY = static_cast<int>(window_height - player_base_height) - texture.getHeight() / 2;
+	const int drawPosX = x_pos - texture.getWidth() / 2;
+	const int drawPosY = window_height - player_base_height - (texture.getHeight() / 2);
 	DrawTexture(texture.get(), drawPosX, drawPosY, WHITE);
 }

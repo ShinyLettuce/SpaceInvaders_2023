@@ -2,7 +2,7 @@
 
 void Alien::Update() noexcept
 {
-	auto const window_width = static_cast<float>(GetScreenWidth());
+	auto const window_width = GetScreenWidth();
 
 	if (moveRight)
 	{
@@ -28,7 +28,7 @@ void Alien::Update() noexcept
 
 void Alien::Render(const MyTexture2D& texture) const noexcept
 {
-	const int drawPosX = static_cast<int>(position.x) - texture.getWidth() / 2;
-	const int drawPosY = static_cast<int>(position.y) - texture.getHeight() / 2;
+	const int drawPosX = position.x - texture.getWidth() / 2;
+	const int drawPosY = position.y - texture.getHeight() / 2;
 	DrawTexture(texture.get(), drawPosX, drawPosY, color);
 }

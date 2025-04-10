@@ -5,19 +5,20 @@
 #include "raylib.h"
 #pragma warning(pop)
 #include "mytexture2d.h"
+#include "mathutils.h"
 
 struct Alien
 {
 public:
 
 	Color color = WHITE;
-	Vector2 position = { 0, 0 };
-	float speed = 2;
-	float radius = 30;
+	Vector2i position = { 0, 0 };
+	Box boundingBox = { 85, 30 };
+	int speed = 2;
 	bool active = true;
 	bool moveRight = true;
 
-	explicit Alien(Vector2 _pos) noexcept
+	explicit Alien(Vector2i _pos) noexcept
 		: position{ _pos }
 	{}
 

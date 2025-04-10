@@ -31,12 +31,11 @@ void Game::checkForGameOver() noexcept
 	}
 	for (const Alien& a : aliens)
 	{
-		if (a.position.y > static_cast<float>(GetScreenHeight()) - player.player_base_height)
+		if (a.position.y > GetScreenHeight() - player.player_base_height)
 		{
 			end();
 		}
 	}
-
 }
 
 void Game::update()
@@ -107,7 +106,7 @@ void Game::spawnAliens()
 {
 	for (int row = 0; row < formationHeight; row++) {
 		for (int col = 0; col < formationWidth; col++) {
-			const Vector2 alienPos{ formationX + 450.f + (static_cast<float>(col) * alienSpacing) , formationY + (static_cast<float>(row) * alienSpacing) };
+			const Vector2i alienPos{ formationX + 450 + (col * alienSpacing) , formationY + (row * alienSpacing) };
 			const Alien newAlien(alienPos);
 			aliens.push_back(newAlien);
 		}
@@ -121,7 +120,7 @@ void Game::spawnWalls()
 	const int wall_distance = window_width / (wallCount + 1);
 	for (int i = 0; i < wallCount; i++)
 	{
-		const Vector2 wallPos{ static_cast<float>(wall_distance * (i + 1)) , static_cast<float>(window_height - 250) };
+		const Vector2i wallPos{ wall_distance * (i + 1) , window_height - 250 };
 		const Wall newWalls(wallPos);
 		walls.push_back(newWalls);
 	}
@@ -157,16 +156,17 @@ void Game::checkCollisions() noexcept
 	{
 		for (Alien& a : aliens)
 		{
-			if (circleLineCollision(a.position, a.radius, p.lineStart, p.lineEnd))
+			if (aabbCollision(a.position, a.boundingBox,  p.position, p.boundingBox))
 			{
 				p.active = false;
 				a.active = false;
 				score += 100;
+				break;
 			}
 		}
 		for (Wall& w : walls)
 		{
-			if (circleLineCollision(w.position, w.radius, p.lineStart, p.lineEnd))
+			if (aabbCollision(w.position, w.boundingBox, p.position, p.boundingBox))
 			{
 				p.active = false;
 				w.health -= 1;
@@ -174,7 +174,7 @@ void Game::checkCollisions() noexcept
 		}
 	}
 
-	if (circleLineCollision({ player.x_pos, GetScreenHeight() - player.player_base_height }, player.radius, enemyProjectile.lineStart, enemyProjectile.lineEnd))
+	if (aabbCollision({ player.x_pos, GetScreenHeight() - player.player_base_height }, player.boundingBox, enemyProjectile.position, enemyProjectile.boundingBox))
 	{
 		enemyProjectile.active = false;
 		player.lives -= 1;
@@ -182,7 +182,7 @@ void Game::checkCollisions() noexcept
 
 	for (Wall& w : walls)
 	{
-		if (circleLineCollision(w.position, w.radius, enemyProjectile.lineStart, enemyProjectile.lineEnd))
+		if (aabbCollision(w.position, w.boundingBox, enemyProjectile.position, enemyProjectile.boundingBox))
 		{
 			enemyProjectile.active = false;
 			w.health -= 1;
@@ -192,9 +192,9 @@ void Game::checkCollisions() noexcept
 
 void Game::createPlayerProjectile()
 {
-	constexpr float speed = 15;
-	const auto window_height = static_cast<float>(GetScreenHeight());
-	const Vector2 projectilePos{ player.x_pos, window_height - 130 };
+	constexpr int speed = 15;
+	const auto window_height = GetScreenHeight();
+	const Vector2i projectilePos{ player.x_pos, window_height - 130 };
 	const Projectile newProjectile(projectilePos, speed);
 	playerProjectiles.push_back(newProjectile);
 }
@@ -211,7 +211,7 @@ void Game::createEnemyProjectile()
 		randomAlienIndex = distribution(generator) % aliens.size();
 	}
 
-	Vector2 projectilePosition = aliens[randomAlienIndex].position;
+	Vector2i projectilePosition = aliens[randomAlienIndex].position;
 	projectilePosition.y += 40;
 	enemyProjectile.position = projectilePosition;
 	enemyProjectile.speed = -15;

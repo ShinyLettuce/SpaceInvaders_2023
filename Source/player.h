@@ -6,22 +6,23 @@
 #pragma warning(pop)
 #include <iostream>
 #include "mytexture2d.h"
+#include "mathutils.h"
 
 struct Player
 {
 public:
 	Player() noexcept
 	{
-		const auto window_width = static_cast<float>(GetScreenWidth());
+		const auto window_width = GetScreenWidth();
 		x_pos = window_width / 2;
 	}
 
-	float timer = 0;
-	float x_pos = 0;
-	float speed = 7;
-	float radius = 50;
+	int x_pos = 0;
+	int player_base_height = 70;
+	Box boundingBox = { 47, 94 };
 	float direction = 0;
-	float player_base_height = 70.0f;
+	float timer = 0;
+	float speed = 7;
 	int lives = 3;
 	int activeTexture = 0;
 

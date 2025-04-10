@@ -5,21 +5,20 @@
 #include "raylib.h"
 #pragma warning(pop)
 #include "mytexture2d.h"
+#include "mathutils.h"
 
 struct Wall
 {
 public:
-	Vector2 position = { 0,0 };
-	Rectangle rec = { 0,0,0,0 };
-	bool active = true;
+	Vector2i position = { 0,0 };
+	Box boundingBox = { 162, 70 };
 	Color color = WHITE;
+	bool active = true;
 	int health = 50;
-	float radius = 60;
 
-	explicit Wall(Vector2 _pos) noexcept :
+	explicit Wall(Vector2i _pos) noexcept :
 		position{ _pos }
-	{
-	}
+	{}
 
 	void Render(const MyTexture2D& texture) const noexcept;
 	void Update() noexcept;
