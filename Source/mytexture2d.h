@@ -43,6 +43,6 @@ public:
 		return _tex;
 	}
 
-	int const getWidth() const noexcept { return _tex.width; }
-	int const getHeight() const noexcept { return _tex.height; }
+	int getWidth() const noexcept { return _tex.width; }
+	int getHeight() const noexcept { return _tex.height; }
 };
