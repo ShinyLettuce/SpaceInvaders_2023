@@ -41,6 +41,10 @@ void Game::checkForGameOver() noexcept
 void Game::update()
 {
 	checkForGameOver();
+	if (gameOver)
+	{
+		return;
+	}
 
 	player.Update();
 	background.Update(-player.x_pos / 15);
