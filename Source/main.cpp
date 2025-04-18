@@ -5,12 +5,9 @@
 #include "raylib.h"
 #pragma warning(pop)
 #include "gamestatemanager.h"
-#include "mywindow.h"
 
 int main(void)
 {    
-
-    MyWindow window;
     GameStateManager game;
 
     while (!WindowShouldClose())

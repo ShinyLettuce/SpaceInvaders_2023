@@ -8,9 +8,12 @@
 #include "game.h"
 #include "startscreen.h"
 #include "endscreen.h"
+#include "mywindow.h"
 
 class GameStateManager
 {
+	MyWindow window;
+
 	enum struct GameState
 	{
 		STARTSCREEN,
