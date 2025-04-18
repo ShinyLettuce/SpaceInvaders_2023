@@ -178,6 +178,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\alien.h" />
+    <ClInclude Include="Source\constants.h" />
     <ClInclude Include="Source\endscreen.h" />
     <ClInclude Include="Source\game.h" />
     <ClInclude Include="Source\gamestatemanager.h" />

@@ -108,9 +108,9 @@ void Game::render() noexcept
 
 void Game::spawnAliens()
 {
-	for (int row = 0; row < formationHeight; row++) {
-		for (int col = 0; col < formationWidth; col++) {
-			const Vector2i alienPos{ formationX + 450 + (col * alienSpacing) , formationY + (row * alienSpacing) };
+	for (int row = 0; row < ALIEN_FORMATION_HEIGHT; row++) {
+		for (int col = 0; col < ALIEN_FORMATION_WIDTH; col++) {
+			const Vector2i alienPos{ FORMATION_STARTING_X + 450 + (col * ALIEN_SPACING) , FORMATION_STARTING_Y + (row * ALIEN_SPACING) };
 			const Alien newAlien(alienPos);
 			aliens.push_back(newAlien);
 		}
@@ -121,8 +121,8 @@ void Game::spawnWalls()
 {
 	const int window_width = GetScreenWidth();
 	const int window_height = GetScreenHeight();
-	const int wall_distance = window_width / (wallCount + 1);
-	for (int i = 0; i < wallCount; i++)
+	const int wall_distance = window_width / (WALL_COUNT + 1);
+	for (int i = 0; i < WALL_COUNT; i++)
 	{
 		const Vector2i wallPos{ wall_distance * (i + 1) , window_height - 250 };
 		const Wall newWalls(wallPos);

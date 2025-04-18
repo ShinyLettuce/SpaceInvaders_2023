@@ -16,18 +16,13 @@
 #include <algorithm>
 #include <random>
 #include "mathutils.h"
+#include "constants.h"
 #pragma warning(push)
 #pragma warning(disable: 26446) //gsl::at() warning
 
 class Game
 {
 	int shootTimer = 0;
-	int alienSpacing = 80;
-	int formationX = 100;
-	int formationY = 50;
-	int formationWidth = 8;
-	int formationHeight = 5;
-	int wallCount = 5;
 	int score = 0;
 	bool gameOver = false;
 	Rectangle rec = { 0, 0 ,0 ,0 };
