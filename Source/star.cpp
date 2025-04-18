@@ -8,7 +8,7 @@ void Star::Update(int starOffset) noexcept
 
 void Star::Render() const noexcept
 {
-	DrawCircle(position.x, position.y, static_cast<float>(size), color);
+	DrawCircle(position.x, position.y, static_cast<float>(size), STAR_COLOR);
 }
 
 void Background::Update(int offset) noexcept

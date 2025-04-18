@@ -6,7 +6,7 @@ void Alien::Update() noexcept
 
 	if (moveRight)
 	{
-		position.x += speed;
+		position.x += ALIEN_SPEED;
 
 		if (position.x >= window_width)
 		{
@@ -16,7 +16,7 @@ void Alien::Update() noexcept
 	}
 	else
 	{
-		position.x -= speed;
+		position.x -= ALIEN_SPEED;
 
 		if (position.x <= 0)
 		{

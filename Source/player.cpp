@@ -12,7 +12,7 @@ void Player::Update() noexcept
 		direction++;
 	}
 
-	x_pos += static_cast<int>(speed * direction);
+	x_pos += PLAYER_SPEED * static_cast<int>(direction);
 
 	if (x_pos < 0 + boundingBox.width / 2)
 	{

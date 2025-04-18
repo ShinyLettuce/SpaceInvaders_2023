@@ -6,12 +6,12 @@
 #pragma warning(pop)
 #include <vector>
 #include "mathutils.h"
+#include "constants.h"
 
 struct Star
 {
 	Vector2i initPosition = { 0, 0 };
 	Vector2i position = { 0, 0 };
-	Color color = SKYBLUE;
 	int size = 0;
 
 	Star() noexcept

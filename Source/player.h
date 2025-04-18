@@ -7,6 +7,7 @@
 #include <iostream>
 #include "mytexture2d.h"
 #include "mathutils.h"
+#include "constants.h"
 
 struct Player
 {
@@ -22,7 +23,6 @@ public:
 	Box boundingBox = { 47, 94 };
 	float direction = 0;
 	float timer = 0;
-	float speed = 7;
 	int lives = 3;
 	int activeTexture = 0;
 

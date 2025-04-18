@@ -149,7 +149,7 @@ void Game::removeDeadEntities()
 
 	if (!enemyProjectile.active)
 	{
-		enemyProjectile.position = { -99, -99 };
+		enemyProjectile.position = INVALID_POSITION;
 		enemyProjectile.speed = 0;
 	}
 }
@@ -164,7 +164,7 @@ void Game::checkCollisions() noexcept
 			{
 				p.active = false;
 				a.active = false;
-				score += 100;
+				score += ALIEN_KILL_SCORE;
 				break;
 			}
 		}
@@ -173,7 +173,7 @@ void Game::checkCollisions() noexcept
 			if (aabbCollision(w.position, w.boundingBox, p.position, p.boundingBox))
 			{
 				p.active = false;
-				w.health -= 1;
+				w.health--;
 			}
 		}
 	}
@@ -181,7 +181,7 @@ void Game::checkCollisions() noexcept
 	if (aabbCollision({ player.x_pos, GetScreenHeight() - player.player_base_height }, player.boundingBox, enemyProjectile.position, enemyProjectile.boundingBox))
 	{
 		enemyProjectile.active = false;
-		player.lives -= 1;
+		player.lives--;
 	}
 
 	for (Wall& w : walls)
@@ -189,7 +189,7 @@ void Game::checkCollisions() noexcept
 		if (aabbCollision(w.position, w.boundingBox, enemyProjectile.position, enemyProjectile.boundingBox))
 		{
 			enemyProjectile.active = false;
-			w.health -= 1;
+			w.health--;
 		}
 	}
 }

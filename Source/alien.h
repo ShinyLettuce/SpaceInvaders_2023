@@ -6,13 +6,13 @@
 #pragma warning(pop)
 #include "mytexture2d.h"
 #include "mathutils.h"
+#include "constants.h"
 
 struct Alien
 {
 public:
 	Vector2i position = { 0, 0 };
 	Box boundingBox = { 85, 30 };
-	int speed = 2;
 	bool active = true;
 	bool moveRight = true;
 
