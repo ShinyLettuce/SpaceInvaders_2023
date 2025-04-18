@@ -10,8 +10,6 @@
 struct Alien
 {
 public:
-
-	Color color = WHITE;
 	Vector2i position = { 0, 0 };
 	Box boundingBox = { 85, 30 };
 	int speed = 2;

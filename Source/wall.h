@@ -12,7 +12,6 @@ struct Wall
 public:
 	Vector2i position = { 0,0 };
 	Box boundingBox = { 162, 70 };
-	Color color = WHITE;
 	bool active = true;
 	int health = 50;
 
