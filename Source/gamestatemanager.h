@@ -15,7 +15,12 @@ using namespace std::string_view_literals;
 
 class GameStateManager
 {
-public:
+	MyWindow window;
+
+	Game game;
+	StartScreen startScreen;
+	EndScreen endScreen;
+
 	enum struct GameState
 	{
 		STARTSCREEN,
@@ -23,24 +28,18 @@ public:
 		ENDSCREEN
 	};
 
-	explicit GameStateManager(GameState gameState) : window("SPACE INVADERS"sv)
-	{
-		stateStack.push(gameState);
-	}
-
-	GameStateManager() = delete;
-
-	void run();
-private:
-	MyWindow window;
-
-	Game game;
-	StartScreen startScreen;
-	EndScreen endScreen;
-	std::stack<GameState> stateStack;
-
+	GameState currentState;
 
 	void startScreenState();
 	void gameplayState();
 	void endScreenState();
+public:
+
+	[[gsl::suppress(26455, justification: "We are allowed to throw if the window cannot initialize, without the window we don't have a game.")]]
+	GameStateManager() : window("SPACE INVADERS"sv)
+	{
+		currentState = GameState::STARTSCREEN;
+	}
+
+	void run();
 };

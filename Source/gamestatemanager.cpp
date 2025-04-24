@@ -6,7 +6,7 @@ void GameStateManager::startScreenState()
 
 	if (IsKeyReleased(KEY_SPACE))
 	{
-		stateStack.push(GameState::GAMEPLAY);
+		currentState = GameState::GAMEPLAY;
 		game.start();
 	}
 }
@@ -18,7 +18,7 @@ void GameStateManager::gameplayState()
 
 	if (game.isGameOver())
 	{
-		stateStack.push(GameState::ENDSCREEN);
+		currentState = GameState::ENDSCREEN;
 		endScreen.setFinalScore(game.getScore());
 		endScreen.setIsNewHighScore(endScreen.CheckNewHighScore());
 	}
@@ -28,11 +28,7 @@ void GameStateManager::endScreenState()
 {
 	if (IsKeyReleased(KEY_ENTER) && !endScreen.getIsNewHighScore())
 	{
-		while (!stateStack.empty())
-		{
-			stateStack.pop();
-		}
-		stateStack.push(GameState::STARTSCREEN);
+		currentState = GameState::STARTSCREEN;
 	}
 
 	endScreen.update();
@@ -44,7 +40,7 @@ void GameStateManager::run()
 	BeginDrawing();
 	ClearBackground(BLACK);
 
-	switch (stateStack.top())
+	switch (currentState)
 	{
 		using enum GameState;
 
