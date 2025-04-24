@@ -45,4 +45,6 @@ public:
 
 	int getWidth() const noexcept { return _tex.width; }
 	int getHeight() const noexcept { return _tex.height; }
+	int getHalfWidth() const noexcept { return _tex.width / 2; }
+	int getHalfHeight() const noexcept { return _tex.height / 2; }
 };

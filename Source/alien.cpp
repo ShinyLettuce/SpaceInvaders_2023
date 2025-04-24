@@ -28,7 +28,7 @@ void Alien::Update() noexcept
 
 void Alien::Render(const MyTexture2D& texture) const noexcept
 {
-	const int drawPosX = position.x - texture.getWidth() / 2;
-	const int drawPosY = position.y - texture.getHeight() / 2;
+	const int drawPosX = position.x - texture.getHalfWidth();
+	const int drawPosY = position.y - texture.getHalfHeight();
 	DrawTexture(texture.get(), drawPosX, drawPosY, WHITE);
 }

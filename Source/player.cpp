@@ -37,7 +37,7 @@ void Player::Render(const MyTexture2D& texture) const noexcept
 {
 	const auto window_height = GetScreenHeight();
 
-	const int drawPosX = x_pos - texture.getWidth() / 2;
-	const int drawPosY = window_height - player_base_height - (texture.getHeight() / 2);
+	const int drawPosX = x_pos - texture.getHalfWidth();
+	const int drawPosY = window_height - player_base_height - texture.getHalfWidth();
 	DrawTexture(texture.get(), drawPosX, drawPosY, WHITE);
 }
