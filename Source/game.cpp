@@ -191,7 +191,7 @@ void Game::createPlayerProjectile()
 	try {
 		playerProjectiles.push_back(newProjectile);
 	}
-	catch (...) { //*swallow. game can continue without this projectile*/
+	catch (...) {
 	}
 }
 
@@ -199,12 +199,9 @@ void Game::createEnemyProjectile()
 {
 	int randomAlienIndex = 0;
 
-	std::default_random_engine generator;
-	std::uniform_int_distribution<int> distribution(0, INT16_MAX);
-
 	if (aliens.size() > 1)
 	{
-		randomAlienIndex = distribution(generator) % aliens.size();
+		randomAlienIndex = GetRandomValue(0, aliens.size());
 	}
 
 	Vector2i projectilePosition = aliens[randomAlienIndex].position;
