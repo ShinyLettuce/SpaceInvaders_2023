@@ -36,7 +36,7 @@ void Game::update()
 	}
 
 	player.Update();
-	background.Update(-player.x_pos / 15);
+	background.Update(player.x_pos);
 	enemyProjectile.Update();
 	for (Projectile& p : playerProjectiles)
 	{
@@ -152,7 +152,7 @@ void Game::checkCollisions() noexcept
 	{
 		for (Alien& a : aliens)
 		{
-			if (aabbCollision(a.position, a.boundingBox, p.position, p.boundingBox))
+			if (aabbCollision(a.position, ALIEN_BOUNDING_BOX, p.position, PROJECTILE_BOUNDING_BOX))
 			{
 				p.active = false;
 				a.active = false;
@@ -162,7 +162,7 @@ void Game::checkCollisions() noexcept
 		}
 		for (Wall& w : walls)
 		{
-			if (aabbCollision(w.position, w.boundingBox, p.position, p.boundingBox))
+			if (aabbCollision(w.position, WALL_BOUNDING_BOX, p.position, PROJECTILE_BOUNDING_BOX))
 			{
 				p.active = false;
 				w.health--;
@@ -170,7 +170,7 @@ void Game::checkCollisions() noexcept
 		}
 	}
 
-	if (aabbCollision({ player.x_pos, GetScreenHeight() - player.player_base_height }, player.boundingBox, enemyProjectile.position, enemyProjectile.boundingBox))
+	if (aabbCollision({ player.x_pos, GetScreenHeight() - player.player_base_height }, PLAYER_BOUNDING_BOX, enemyProjectile.position, PROJECTILE_BOUNDING_BOX))
 	{
 		enemyProjectile.active = false;
 		player.lives--;
@@ -178,7 +178,7 @@ void Game::checkCollisions() noexcept
 
 	for (Wall& w : walls)
 	{
-		if (aabbCollision(w.position, w.boundingBox, enemyProjectile.position, enemyProjectile.boundingBox))
+		if (aabbCollision(w.position, WALL_BOUNDING_BOX, enemyProjectile.position, PROJECTILE_BOUNDING_BOX))
 		{
 			enemyProjectile.active = false;
 			w.health--;

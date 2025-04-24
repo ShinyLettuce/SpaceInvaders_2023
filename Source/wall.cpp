@@ -3,7 +3,8 @@
 void Wall::Render(const MyTexture2D& texture) const noexcept
 {
 	DrawTexture(texture.get(), position.x - texture.getHalfWidth(), position.y - texture.getHalfHeight(), WHITE);
-	DrawText(TextFormat("%i", health), position.x - 21, position.y + 10, 40, RED);
+	const Vector2i wallTextPos = { position.x - WALL_TEXT_X_OFFSET, position.y + WALL_TEXT_Y_OFFSET };
+	DrawText(TextFormat("%i", health), wallTextPos.x, wallTextPos.y, WALL_TEXT_FONT_SIZE, RED);
 }
 
 void Wall::Update() noexcept

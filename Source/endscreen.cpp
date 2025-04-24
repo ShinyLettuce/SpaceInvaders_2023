@@ -29,7 +29,7 @@ void EndScreen::update()
 		return;
 	}
 
-	if (name.length() > 0 && name.length() < maxLetterCount && IsKeyReleased(KEY_ENTER))
+	if (name.length() > 0 && name.length() <= ENDSCREEN_MAX_LETTER_COUNT && IsKeyReleased(KEY_ENTER))
 	{
 		const std::string_view nameEntry(name);
 		InsertNewHighScore(nameEntry);
@@ -67,7 +67,7 @@ void EndScreen::updateTextBox() noexcept
 	SetMouseCursor(MOUSE_CURSOR_IBEAM);
 	addInputCharacter();
 
-	if (IsKeyPressed(KEY_BACKSPACE))
+	if (IsKeyPressed(KEY_BACKSPACE) && !name.empty())
 	{
 		name.pop_back();
 	}
@@ -81,7 +81,7 @@ void EndScreen::addInputCharacter() noexcept
 			auto key = static_cast<char>(GetCharPressed());
 			while (key > 0)
 			{
-				if ((key >= 32) && (key <= 125) && (name.length() < maxLetterCount))
+				if ((key >= 32) && (key <= 125) && (name.length() < ENDSCREEN_MAX_LETTER_COUNT))
 				{
 					name.append(1, key);
 				}
@@ -105,10 +105,10 @@ void EndScreen::drawLeaderboard() noexcept
 void EndScreen::drawTextBox() const noexcept
 {
 	DrawRectangleRec(textBox, LIGHTGRAY);
-	DrawText(TextFormat("INPUT CHARS: %i/%i", name.length(), maxLetterCount), 600, 600, 20, YELLOW);
+	DrawText(TextFormat("INPUT CHARS: %i/%i", name.length(), ENDSCREEN_MAX_LETTER_COUNT), 600, 600, 20, YELLOW);
 	DrawText(name.data(), static_cast<int>(textBox.x) + 5, static_cast<int>(textBox.y) + 8, 40, MAROON);
 
-	if (name.length() > 0 && name.length() <= maxLetterCount)
+	if (name.length() > 0 && name.length() <= ENDSCREEN_MAX_LETTER_COUNT)
 	{
 		DrawText("PRESS ENTER TO CONTINUE", 600, 800, 40, YELLOW);
 	}
@@ -121,7 +121,7 @@ void EndScreen::drawTextBox() const noexcept
 
 	DrawRectangleLinesEx(textBox, outlineWidth, RED);
 
-	if (name.length() < maxLetterCount)
+	if (name.length() < ENDSCREEN_MAX_LETTER_COUNT)
 	{
 		if (((framesCounter / 20) % 2) == 0)
 		{

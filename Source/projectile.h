@@ -13,7 +13,6 @@ public:
 	int speed = 15;
 	bool active = true;
 	Vector2i position = { 0,0 };
-	Box boundingBox = { 6, 42 };
 
 	Projectile(Vector2i _position, int _speed) noexcept : 
 		speed{_speed},

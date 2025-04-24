@@ -20,7 +20,6 @@ public:
 
 	int x_pos = 0;
 	int player_base_height = 70;
-	Box boundingBox = { 47, 94 };
 	float direction = 0;
 	float timer = 0;
 	int lives = 3;

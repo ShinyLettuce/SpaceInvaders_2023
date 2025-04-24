@@ -14,21 +14,21 @@ void Player::Update() noexcept
 
 	x_pos += PLAYER_SPEED * static_cast<int>(direction);
 
-	if (x_pos < 0 + boundingBox.width / 2)
+	if (x_pos < 0 + PLAYER_BOUNDING_BOX.width / 2)
 	{
-		x_pos = 0 + boundingBox.width / 2;
+		x_pos = 0 + PLAYER_BOUNDING_BOX.width / 2;
 	}
-	else if (x_pos > GetScreenWidth() - boundingBox.width / 2)
+	else if (x_pos > GetScreenWidth() - PLAYER_BOUNDING_BOX.width / 2)
 	{
-		x_pos = GetScreenWidth() - boundingBox.width / 2;
+		x_pos = GetScreenWidth() - PLAYER_BOUNDING_BOX.width / 2;
 	}
 
 	timer += GetFrameTime();
 
-	if (timer > 0.4)
+	if (timer > PLAYER_ANIMATION_FRAME_TIME)
 	{
 		activeTexture++;
-		activeTexture = activeTexture % 3;
+		activeTexture = activeTexture % PLAYER_ANIMATION_FRAME_COUNT;
 		timer = 0;
 	}
 }

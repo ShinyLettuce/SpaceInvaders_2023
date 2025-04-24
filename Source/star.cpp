@@ -2,7 +2,7 @@
 
 void Star::Update(int starOffset) noexcept
 {
-	position.x = initPosition.x + starOffset;
+	position.x = initPosition.x - starOffset / 15;
 	position.y = initPosition.y;
 }
 

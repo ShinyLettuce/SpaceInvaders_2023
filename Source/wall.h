@@ -6,12 +6,12 @@
 #pragma warning(pop)
 #include "mytexture2d.h"
 #include "mathutils.h"
+#include "constants.h"
 
 struct Wall
 {
 public:
 	Vector2i position = { 0,0 };
-	Box boundingBox = { 162, 70 };
 	bool active = true;
 	int health = 50;
 

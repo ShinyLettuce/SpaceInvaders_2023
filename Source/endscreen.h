@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <array>
+#include "constants.h"
 #pragma warning(push)
 #pragma warning(disable: 26446) //gsl::at() warning
 
@@ -21,7 +22,6 @@ class EndScreen
 	std::string name;
 	int finalScore = 0;
 	int framesCounter = 0;
-	int maxLetterCount = 8;
 	bool mouseOnText = false;
 	bool isNewHighScore = false;
 	float outlineWidth = 1.f;
