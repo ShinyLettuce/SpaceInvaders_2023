@@ -28,10 +28,11 @@ void GameStateManager::endScreenState()
 {
 	if (IsKeyReleased(KEY_ENTER) && !endScreen.getIsNewHighScore())
 	{
-		while (stateStack.top() != GameState::STARTSCREEN)
+		while (!stateStack.empty())
 		{
 			stateStack.pop();
 		}
+		stateStack.push(GameState::STARTSCREEN);
 	}
 
 	endScreen.update();

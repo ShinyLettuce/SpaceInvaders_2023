@@ -1,5 +1,9 @@
 #pragma once
+#include <CodeAnalysis/Warnings.h>
+#pragma warning(push)
+#pragma warning(disable:ALL_CODE_ANALYSIS_WARNINGS)
 #include "raylib.h"
+#pragma warning(pop)
 #include <stdexcept>
 
 class MyWindow {
@@ -15,7 +19,8 @@ public:
 		}
 		SetTargetFPS(60);
 	}
-
+	
+	MyWindow() = delete;
 	MyWindow(const MyWindow& other) = delete;
 	MyWindow& operator=(const MyWindow& other) = delete;
 	MyWindow(MyWindow&& other) = delete;

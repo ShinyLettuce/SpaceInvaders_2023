@@ -78,7 +78,11 @@ void Game::render() noexcept
 
 	DrawText(TextFormat("Score: %i", score), 50, 20, 40, YELLOW);
 	DrawText(TextFormat("Lives: %i", player.lives), 50, 70, 40, YELLOW);
-	player.Render(shipTextures[player.activeTexture]);
+
+	[[gsl::suppress(26482, justification: "Arithmetic conversion warning. Would do animations with a sprite sheet if I wanted to fix this")]]
+		{
+			player.Render(shipTextures[player.activeTexture]);
+		}
 
 	enemyProjectile.Render(laserTexture);
 	for (const Projectile& p : playerProjectiles)
@@ -192,18 +196,21 @@ void Game::createPlayerProjectile()
 		playerProjectiles.push_back(newProjectile);
 	}
 	catch (...) {
+		return;
 	}
 }
 
-void Game::createEnemyProjectile()
+void Game::createEnemyProjectile() noexcept
 {
 	int randomAlienIndex = 0;
 
 	if (aliens.size() > 1)
 	{
-		randomAlienIndex = GetRandomValue(0, aliens.size());
+		[[gsl::suppress(26472, justification: "I don't care about narrowing conversions here")]]
+			{
+				randomAlienIndex = GetRandomValue(0, static_cast<int>(aliens.size()) - 1);
+			}
 	}
-
 	Vector2i projectilePosition = aliens[randomAlienIndex].position;
 	projectilePosition.y += 40;
 	enemyProjectile.position = projectilePosition;

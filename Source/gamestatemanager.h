@@ -15,15 +15,24 @@ using namespace std::string_view_literals;
 
 class GameStateManager
 {
-	MyWindow window;
-
-
+public:
 	enum struct GameState
 	{
 		STARTSCREEN,
 		GAMEPLAY,
 		ENDSCREEN
 	};
+
+	explicit GameStateManager(GameState gameState) : window("SPACE INVADERS"sv)
+	{
+		stateStack.push(gameState);
+	}
+
+	GameStateManager() = delete;
+
+	void run();
+private:
+	MyWindow window;
 
 	Game game;
 	StartScreen startScreen;
@@ -34,12 +43,4 @@ class GameStateManager
 	void startScreenState();
 	void gameplayState();
 	void endScreenState();
-public:
-
-	GameStateManager() : window("SPACE INVADERS"sv)
-	{
-		stateStack.push(GameState::STARTSCREEN);
-	}
-
-	void run();
 };

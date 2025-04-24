@@ -76,15 +76,18 @@ void EndScreen::updateTextBox() noexcept
 
 void EndScreen::addInputCharacter() noexcept
 {
-	char key = GetCharPressed();
-	while (key > 0)
-	{
-		if ((key >= 32) && (key <= 125) && (name.length() < maxLetterCount))
+	[[gsl::suppress(26472, justification: "I don't care about narrowing conversions")]]
 		{
-			name.append(1, key);
+			auto key = static_cast<char>(GetCharPressed());
+			while (key > 0)
+			{
+				if ((key >= 32) && (key <= 125) && (name.length() < maxLetterCount))
+				{
+					name.append(1, key);
+				}
+				key = static_cast<char>(GetCharPressed());
+			}
 		}
-		key = GetCharPressed();
-	}
 }
 
 void EndScreen::drawLeaderboard() noexcept

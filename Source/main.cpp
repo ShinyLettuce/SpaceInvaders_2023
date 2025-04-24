@@ -11,7 +11,7 @@
 int main(void)
 {
 	try {
-		GameStateManager game;
+		GameStateManager game(GameStateManager::GameState::STARTSCREEN);
 		while (!WindowShouldClose())
 		{
 			game.run();
