@@ -122,6 +122,7 @@ void Game::spawnWalls()
 void Game::removeDeadEntities()
 {
 	auto isDead = [](const auto& p) { return !p.active; };
+
 	playerProjectiles.erase(
 		std::remove_if(playerProjectiles.begin(), playerProjectiles.end(), isDead),
 		playerProjectiles.end());
