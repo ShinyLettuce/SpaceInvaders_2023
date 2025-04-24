@@ -6,10 +6,10 @@ class MyWindow {
 	int screenWidth = 1920;
 	int screenHeight = 1080;
 public:
-	MyWindow()
+	explicit MyWindow(std::string_view title)
 	{
-		InitWindow(screenWidth, screenHeight, "SPACE INVADERS");
-		if (!IsWindowReady)
+		InitWindow(screenWidth, screenHeight, title.data());
+		if (!IsWindowReady())
 		{
 			throw std::runtime_error("Failed to open window");
 		}

@@ -9,10 +9,13 @@
 #include "startscreen.h"
 #include "endscreen.h"
 #include "mywindow.h"
+#include <string_view>
+//bring in string literals för ""sv
+using namespace std::string_view_literals;
 
 class GameStateManager
 {
-	MyWindow window;
+	MyWindow window("SPACE INVADERS"sv);
 
 	enum struct GameState
 	{

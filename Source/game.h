@@ -48,7 +48,7 @@ class Game
 	void createPlayerProjectile();
 	void createEnemyProjectile();
 	void removeDeadEntities();
-	void checkForGameOver() noexcept;
+	bool checkForGameOver() const noexcept;
 	void checkCollisions() noexcept;
 public:
 

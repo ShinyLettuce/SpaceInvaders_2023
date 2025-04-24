@@ -31,10 +31,9 @@ struct Background
 
 	explicit Background(int starAmount)
 	{
-		for (int i = 0; i < starAmount; i++)
-		{
-			const Star newStar;
-			Stars.push_back(newStar);
+		Stars.reserve(starAmount);
+		for (int i = 0; i < starAmount; i++){			
+			Stars.emplace_back();
 		}
 	}
 

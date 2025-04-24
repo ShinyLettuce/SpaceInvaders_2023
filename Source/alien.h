@@ -12,9 +12,9 @@ struct Alien
 {
 public:
 	Vector2i position = { 0, 0 };
-	Box boundingBox = { 85, 30 };
+	Box boundingBox = { 85, 30 }; //TODO: consider making static const 
 	bool active = true;
-	bool moveRight = true;
+	bool moveRight = true; //TODO: consider using a velocity instead, and if you need  aquery, provide an interface: bool moving_right() [ return velociuty < 0 };
 
 	explicit Alien(Vector2i _pos) noexcept
 		: position{ _pos }

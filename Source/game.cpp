@@ -19,31 +19,20 @@ void Game::end() noexcept
 	gameOver = true;
 }
 
-void Game::checkForGameOver() noexcept
+bool Game::checkForGameOver() const noexcept
 {
-	if (IsKeyReleased(KEY_Q))
-	{
-		end();
-	}
-	if (player.lives < 1)
-	{
-		end();
-	}
-	for (const Alien& a : aliens)
-	{
-		if (a.position.y > GetScreenHeight() - player.player_base_height)
-		{
-			end();
-		}
-	}
+	const auto pos = player.player_base_height;
+	const auto reached_end = [pos](const Alien& a) noexcept {
+		return (a.position.y > GetScreenHeight() - pos);
+		};
+	return (IsKeyReleased(KEY_Q) || (player.lives < 1)) || std::ranges::any_of(aliens, reached_end);
 }
 
 void Game::update()
 {
-	checkForGameOver();
-	if (gameOver)
+	if (checkForGameOver())
 	{
-		return;
+		return end();
 	}
 
 	player.Update();
@@ -132,19 +121,17 @@ void Game::spawnWalls()
 
 void Game::removeDeadEntities()
 {
+	auto isDead = [](const auto& p) { return !p.active; };
 	playerProjectiles.erase(
-		std::remove_if(playerProjectiles.begin(), playerProjectiles.end(),
-			[](const Projectile& p) { return !p.active; }),
+		std::remove_if(playerProjectiles.begin(), playerProjectiles.end(), isDead),
 		playerProjectiles.end());
 
 	aliens.erase(
-		std::remove_if(aliens.begin(), aliens.end(),
-			[](const Alien& a) { return !a.active; }),
+		std::remove_if(aliens.begin(), aliens.end(), isDead),
 		aliens.end());
 
 	walls.erase(
-		std::remove_if(walls.begin(), walls.end(),
-			[](const Wall& w) { return !w.active; }),
+		std::remove_if(walls.begin(), walls.end(), isDead),
 		walls.end());
 
 	if (!enemyProjectile.active)
@@ -160,7 +147,7 @@ void Game::checkCollisions() noexcept
 	{
 		for (Alien& a : aliens)
 		{
-			if (aabbCollision(a.position, a.boundingBox,  p.position, p.boundingBox))
+			if (aabbCollision(a.position, a.boundingBox, p.position, p.boundingBox))
 			{
 				p.active = false;
 				a.active = false;
@@ -200,7 +187,11 @@ void Game::createPlayerProjectile()
 	const auto window_height = GetScreenHeight();
 	const Vector2i projectilePos{ player.x_pos, window_height - 130 };
 	const Projectile newProjectile(projectilePos, speed);
-	playerProjectiles.push_back(newProjectile);
+	try {
+		playerProjectiles.push_back(newProjectile);
+	}
+	catch (...) { //*swallow. game can continue without this projectile*/
+	}
 }
 
 void Game::createEnemyProjectile()
